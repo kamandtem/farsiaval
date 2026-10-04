@@ -456,16 +456,11 @@
 @keyframes guidePulse{0%,100%{box-shadow:0 0 0 200vmax oklch(22% .04 260/.62),0 0 0 4px oklch(85% .16 85)}50%{box-shadow:0 0 0 200vmax oklch(22% .04 260/.62),0 0 0 8px oklch(85% .16 85/.7)}}
 @media (prefers-reduced-motion:reduce){.wv-guide-hole,.wv-guide-emoji{animation:none}}
 
-/* ===== تغییرات تازه: بلندگو، پنجرهٔ درس ۱، تصویر واژه در بازی‌های تصویری ===== */
-.like-prompt{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
-.like-speaker{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:14px;background:oklch(88% .08 85);color:oklch(40% .08 75);cursor:pointer}
-.like-speaker:disabled{opacity:.4}
-.like-emoji .word-art-img,.like-emoji .word-placeholder-icon{width:3rem;height:3rem;margin-inline:auto}
-.flash-emoji .word-art-img,.flash-emoji .word-placeholder-icon{width:clamp(5rem,22vw,8rem);height:clamp(5rem,22vw,8rem);margin-inline:auto}
-.wv-popup-backdrop{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:oklch(20% .03 250/.35);animation:wvPopFade 200ms ease-out both}
-.wv-popup{display:grid;justify-items:center;gap:10px;width:min(88vw,380px);padding:20px 18px 14px;border-radius:26px;background:oklch(99% .01 85);box-shadow:0 14px 40px oklch(20% .03 250/.3);text-align:center;animation:wvPopIn 260ms cubic-bezier(.2,1.4,.4,1) both}
-.wv-popup-icon{font-size:2.4rem;line-height:1}
-.wv-popup p{margin:0;font-size:1.05rem;font-weight:900;line-height:1.8;color:oklch(38% .08 260)}
-.wv-popup-ok{width:72px;height:72px}
-@keyframes wvPopFade{from{opacity:0}to{opacity:1}}
-@keyframes wvPopIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.lesson-lock-backdrop{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:oklch(20% .03 250/.5)}
+.lesson-lock-panel{display:grid;justify-items:center;gap:14px;width:min(90vw,420px);padding:28px 20px;border-radius:30px;background:oklch(99% .01 85);box-shadow:0 20px 50px oklch(20% .03 250/.25)}
+.lock-icon{font-size:3.6rem}
+.lesson-lock-panel h2{margin:0;font-size:1.3rem;font-weight:1000;color:oklch(35% .08 260)}
+.lesson-lock-panel p{margin:0;font-size:1rem;font-weight:900;line-height:1.6;color:oklch(50% .06 250)}
+.lock-actions{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:6px}
+.big-buy{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:0;border-radius:18px;background:oklch(66% .16 145);color:#fff;font-size:1rem;font-weight:1000;cursor:pointer;box-shadow:0 5px 0 oklch(52% .14 145)}
+.big-buy:active{transform:translateY(3px);box-shadow:0 2px 0 oklch(52% .14 145)}

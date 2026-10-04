@@ -298,8 +298,7 @@ export const SyllableGame: React.FC<{ lesson: CurriculumLesson; onDone: () => vo
     window.clearTimeout(timer.current);
     setStage(soundOnly ? 2 : 1); setSylDone(parsed.syllables.map(() => false)); setSel(null); setPicked(null);
     setFilled(parsed.cells.map(() => null)); setChips(makeChips(parsed));
-    // صدای خود کلمه خودکار پخش نمی‌شود؛ فقط راهنمای کلی
-    sound.speakPersian(soundOnly ? 'صداهای این کلمه را جدا کن' : 'این کلمه را بخش بخش کن');
+    sound.speakPersian(soundOnly ? `صداهای کلمهٔ ${speakable(word)} را جدا کن` : `کلمهٔ ${speakable(word)} را بخش بخش کن`);
   }, [word, parsed, soundOnly, makeChips]);
   useEffect(() => () => window.clearTimeout(timer.current), []);
 

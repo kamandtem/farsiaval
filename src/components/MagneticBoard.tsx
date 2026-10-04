@@ -5,6 +5,7 @@ import { FIRST_GRADE_WORDS } from '../data/words';
 import { PersianLetter, PlacedMagneticPiece, WordItem } from '../types';
 import { clusterPieces, computePersianForms, findSnapCandidate, getHarakatById, getLetterById, getLetterGlyph, normalizePersian } from '../utils/persianEngine';
 import { sound } from '../utils/audio';
+import { license } from '../utils/license';
 import { toFa, useCurrentLesson } from '../utils/lessonState';
 import { boardLessonWords, emojiText } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
@@ -23,6 +24,8 @@ export const MagneticBoard: React.FC<Props> = ({ onActivityComplete }) => {
   const boardRef = useRef<HTMLDivElement>(null);
   const celebrated = useRef(new Set<string>());
   const dragStart = useRef<{x:number;y:number;positions:Map<string,{x:number;y:number}>}>({x:0,y:0,positions:new Map()});
+  const [hasLicense, setHasLicense] = useState(false);
+  useEffect(() => { license.init().then(() => license.checkLicense()).then(l => setHasLicense(l.isPurchased)); }, []);
   const [pieces, setPieces] = useState<PlacedMagneticPiece[]>([]);
   const [draggingId, setDraggingId] = useState<string|null>(null);
   const [snap, setSnap] = useState<{x:number;y:number}|null>(null);
