@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="3.3 5.31 102.69 9.26" preserveAspectRatio="none">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_67);
+      }
+
+      .cls-1, .cls-2 {
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        isolation: isolate;
+      }
+
+      .cls-2 {
+        fill: #c7c9ca;
+        mix-blend-mode: soft-light;
+        opacity: .5;
+      }
+    </style>
+    <linearGradient id="_67" data-name="  67" x1="54.6" y1="14.57" x2="54.6" y2="5.31" gradientUnits="userSpaceOnUse">
+      <stop offset=".02" stop-color="#6d435e"/>
+      <stop offset="1" stop-color="#7f2f36"/>
+    </linearGradient>
+  </defs>
+  <g class="cls-3">
+    <g id="pirate_game_ui" data-name="pirate game ui">
+      <g>
+        <path class="cls-1" d="m101.36,14.57H7.93c-2.55,0-4.63-2.08-4.63-4.63h0c0-2.55,2.08-4.63,4.63-4.63h93.43c2.55,0,4.63,2.08,4.63,4.63h0c0,2.55-2.08,4.63-4.63,4.63Z"/>
+        <path class="cls-2" d="m5.07,8.31c-.06,2.81,6.64,2.71,7.2.28.67-2.9-7.11-4.49-7.2-.28Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

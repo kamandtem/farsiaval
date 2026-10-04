@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 35.11 35.56">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: .76;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7, .cls-8 {
+        stroke-width: 0px;
+      }
+
+      .cls-1, .cls-2, .cls-7 {
+        mix-blend-mode: multiply;
+      }
+
+      .cls-1, .cls-7 {
+        fill: #c60055;
+      }
+
+      .cls-2 {
+        fill: #7a369e;
+        opacity: .4;
+      }
+
+      .cls-9 {
+        isolation: isolate;
+      }
+
+      .cls-3 {
+        fill: #870d15;
+      }
+
+      .cls-4 {
+        fill: url(#_319);
+      }
+
+      .cls-5 {
+        fill: #faa882;
+        mix-blend-mode: soft-light;
+        opacity: .6;
+      }
+
+      .cls-6 {
+        fill: url(#_26);
+      }
+
+      .cls-7 {
+        opacity: .2;
+      }
+
+      .cls-8 {
+        fill: #d1572e;
+      }
+    </style>
+    <linearGradient id="_26" data-name="  26" x1="18.29" y1="33.49" x2="18.29" y2="4.12" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9c1729"/>
+      <stop offset="1" stop-color="#ac3124"/>
+    </linearGradient>
+    <linearGradient id="_319" data-name="  319" x1="17.55" y1="30.09" x2="17.55" y2="1.64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bf2f51"/>
+      <stop offset=".39" stop-color="#ce4b42"/>
+      <stop offset=".74" stop-color="#d85f38"/>
+      <stop offset=".98" stop-color="#dc6635"/>
+    </linearGradient>
+  </defs>
+  <g class="cls-9">
+    <g id="pirate_game_ui" data-name="pirate game ui">
+      <g>
+        <path class="cls-6" d="m32.5,19.27c.56,7.84-6.37,14.23-14.23,14.23s-14.23-6.37-14.23-14.23.92-8.86,14.23-14.23c6.39-2.58,13.19-.31,14.23,14.23Z"/>
+        <circle class="cls-4" cx="17.55" cy="15.87" r="14.23"/>
+        <path class="cls-7" d="m27.65,19.92c0,1.25-.19,2.45-.61,3.5-.12.31-.27.6-.46.89t0,0c-2.46,3.89-9.92,5.84-9.92,5.84-1.87-.19-4.86-1.12-4.86-1.12,0,0,7.67.75,10.75-4.96,3.09-5.7-8.6-15.24-15.24-17.68l.93-1.31s2.62-.11,5.87.45c0,0,.01,0,.02,0,2.68.46,5.79,1.38,8.24,3.19,3.21,2.38,5.29,7.09,5.29,11.18Z"/>
+        <path class="cls-5" d="m6.25,7.96c2.24-3.77,5.36-5.42,9.25-6.01,3.41-.52,6.6.18,9.6,2.24,3.01,2.06,4.39,7.41,3.09,7.67-18.86,3.69-24.18-.12-21.94-3.89Z"/>
+        <path class="cls-2" d="m10.73,30.75c3.1,2.44,10.19,3.08,13.26,1.43,3.06-1.65,1.11-3.76-.37-3.24-1.69.59-4.79,1.41-8.41,1.02-3.61-.39-7.07-1.26-4.48.79Z"/>
+        <path class="cls-3" d="m17.31,11.82c0,1.6.19,4.58-.28,4.96-.47.37-7.48.28-7.76,3.46-.28,3.18,3.09,6.27,6.83,5.52s2.9-13.09,3.27-13.37c.37-.28,2.43-1.12,3.18,1.5.75,2.62.65,3.65.94,3.74.28.09,2.62-3.18,1.03-6.92-1.08-2.54-5.24-3.46-6.17-3.46s-1.03,2.71-1.03,4.58Z"/>
+        <path class="cls-1" d="m27.26,20.11c.03.83,3.43.15,1.98-.79-1.1-.71-2,.46-1.98.79Z"/>
+        <path class="cls-8" d="m27.69,21.26c1.25.81,2.26-.31,2.18-.55s-2.72.2-2.18.55Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

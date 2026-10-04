@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 38.22 36">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7a369e;
+        mix-blend-mode: multiply;
+        opacity: .4;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6 {
+        stroke-width: 0px;
+      }
+
+      .cls-7 {
+        isolation: isolate;
+      }
+
+      .cls-2 {
+        fill: #870d15;
+      }
+
+      .cls-3 {
+        fill: url(#_319);
+      }
+
+      .cls-4 {
+        fill: #8a0707;
+      }
+
+      .cls-5 {
+        fill: url(#_26);
+      }
+
+      .cls-6 {
+        fill: #d1572e;
+      }
+    </style>
+    <linearGradient id="_26" data-name="  26" x1="18.12" y1="34.04" x2="18.12" y2="4.67" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9c1729"/>
+      <stop offset="1" stop-color="#ac3124"/>
+    </linearGradient>
+    <linearGradient id="_319" data-name="  319" x1="17.39" y1="30.64" x2="17.39" y2="2.19" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bf2f51"/>
+      <stop offset=".39" stop-color="#ce4b42"/>
+      <stop offset=".74" stop-color="#d85f38"/>
+      <stop offset=".98" stop-color="#dc6635"/>
+    </linearGradient>
+  </defs>
+  <g class="cls-7">
+    <g id="pirate_game_ui" data-name="pirate game ui">
+      <g>
+        <path class="cls-5" d="m32.33,19.81c.56,7.84-6.37,14.23-14.23,14.23S3.88,27.67,3.88,19.81s.92-8.86,14.23-14.23c6.39-2.58,13.19-.31,14.23,14.23Z"/>
+        <circle class="cls-3" cx="17.39" cy="16.41" r="14.23"/>
+        <path class="cls-1" d="m10.56,31.29c3.1,2.44,10.19,3.08,13.26,1.43,3.06-1.65,1.11-3.76-.37-3.24-1.69.59-4.79,1.41-8.41,1.02-3.61-.39-7.07-1.26-4.48.79Z"/>
+        <path class="cls-2" d="m16.71,10.2c-1.99,1.04-2.87,1.75-4.59,3.16-1.72.05-2.58.12-4.31.37.41,3.36.43,5.06.17,8.49,1.65.27,2.47.35,4.12.4,1.94,1.05,2.94,1.55,5.11,2.14,1.32-4.73,1.75-10.06-.51-14.56Z"/>
+        <path class="cls-2" d="m20.36,22.43c-.15,0-.3-.05-.42-.15-.27-.23-.31-.64-.08-.92,3.75-4.44-.04-8.06-.21-8.21-.26-.24-.28-.66-.04-.92.24-.26.65-.28.92-.04.05.05,4.88,4.6.32,10-.13.15-.31.23-.5.23Z"/>
+        <path class="cls-2" d="m23.75,24.62c-.15,0-.3-.05-.42-.15-.27-.23-.31-.64-.08-.92,5.61-6.64-.08-12.05-.32-12.28-.26-.24-.28-.66-.04-.92.24-.26.65-.28.92-.04.07.06,6.86,6.47.43,14.07-.13.15-.31.23-.5.23Z"/>
+        <path class="cls-4" d="m8.48,26.23c-2.05,2.38,1.68,4.8,3.04,2.88s-1.65-4.49-3.04-2.88Z"/>
+        <path class="cls-6" d="m8.36,28.87c1.51,1.79,3.22.43,3.19.03-.03-.41-3.84-.8-3.19-.03Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
