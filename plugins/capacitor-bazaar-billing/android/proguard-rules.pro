@@ -1,0 +1,3 @@
+-keep class ir.cafebazaar.poolakey.** { *; }
+-keep interface com.android.vending.billing.** { *; }
+-keep class ir.alfba.bazaarbilling.** { *; }

@@ -1,0 +1,49 @@
+// Local Capacitor plugin for Cafe Bazaar billing (Poolakey 2.2.0, official SDK)
+ext {
+    androidxAppCompatVersion = project.hasProperty('androidxAppCompatVersion') ? rootProject.ext.androidxAppCompatVersion : '1.7.0'
+}
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.7.2'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace "ir.alfba.bazaarbilling"
+    compileSdk project.hasProperty('compileSdkVersion') ? rootProject.ext.compileSdkVersion : 35
+    defaultConfig {
+        minSdkVersion project.hasProperty('minSdkVersion') ? rootProject.ext.minSdkVersion : 23
+        targetSdkVersion project.hasProperty('targetSdkVersion') ? rootProject.ext.targetSdkVersion : 35
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    lint { abortOnError false }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+    // Poolakey is published only on JitPack (NOT on npm — that was the CI error)
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation project(':capacitor-android')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation 'com.github.cafebazaar.Poolakey:poolakey:2.2.0'
+    // Poolakey's API uses Kotlin function types (Unit, Function0/1); needed to compile the Java bridge
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.24'
+}
