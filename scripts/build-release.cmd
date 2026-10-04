@@ -29,6 +29,7 @@ call npm run build || exit /b 1
 if not exist android ( call npx cap add android || exit /b 1 )
 call npm run assets:generate || exit /b 1
 call npx cap sync android || exit /b 1
+call node scripts\patch-android.mjs || exit /b 1
 
 pushd android
 call gradlew.bat -I "%ROOT%\scripts\release.gradle" assembleRelease || ( popd & exit /b 1 )

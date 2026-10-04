@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { CURRICULUM, lessonForToday } from '../data/curriculum';
+import { FREE_LESSON_LIMIT, isLessonLocked, onFullVersionChange, openPaywall } from './billing';
 
 const KEY = 'alefba_current_lesson_v2';
 const EVT = 'alefba-lesson-change';
 
-export function getCurrentLesson(): number {
+/** درس دلخواه (بدون در نظر گرفتن قفل) */
+function storedLesson(): number {
   try {
     const raw = localStorage.getItem(KEY);
     const n = raw ? Number(raw) : NaN;
@@ -12,17 +14,26 @@ export function getCurrentLesson(): number {
   } catch { /* ignore */ }
   return lessonForToday();
 }
-export function setCurrentLesson(order: number) {
+/** درسی که واقعاً نمایش داده می‌شود: بدون خرید، حداکثر درس رایگان */
+export function getCurrentLesson(): number {
+  const n = storedLesson();
+  return isLessonLocked(n) ? FREE_LESSON_LIMIT : n;
+}
+/** انتخاب درس؛ اگر درس قفل باشد پنجرهٔ خرید باز می‌شود و false برمی‌گردد */
+export function setCurrentLesson(order: number): boolean {
+  if (isLessonLocked(order)) { openPaywall(order); return false; }
   try { localStorage.setItem(KEY, String(order)); } catch { /* ignore */ }
   window.dispatchEvent(new CustomEvent(EVT, { detail: order }));
+  return true;
 }
 /** درسی که دانش‌آموز الان در آن است؛ همهٔ دهکده‌ها محتوا را تا همین درس نشان می‌دهند */
-export function useCurrentLesson(): [number, (n: number) => void] {
+export function useCurrentLesson(): [number, (n: number) => boolean] {
   const [lesson, setLesson] = useState(getCurrentLesson);
   useEffect(() => {
-    const on = (e: Event) => setLesson((e as CustomEvent).detail);
+    const on = () => setLesson(getCurrentLesson());
     window.addEventListener(EVT, on);
-    return () => window.removeEventListener(EVT, on);
+    const off = onFullVersionChange(on); // خرید یا لغو خرید
+    return () => { window.removeEventListener(EVT, on); off(); };
   }, []);
   return [lesson, setCurrentLesson];
 }

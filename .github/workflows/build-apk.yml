@@ -31,6 +31,8 @@ jobs:
           fi
           npm run assets:generate
           npx cap sync android
+          node scripts/patch-android.mjs
+          grep -q "BazaarBillingPlugin" android/app/src/main/assets/capacitor.plugins.json || { echo "::error::BazaarBilling plugin was not registered"; exit 1; }
       - name: Load release signing key
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

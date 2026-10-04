@@ -5,7 +5,6 @@ import { boardLessonWords, boardSuggestWords, dictationWords, DictationItem, fin
 import { WordPic } from './shared/WordPic';
 import { finishProblem, parseToken, plainSequence, renderSequence, tashdidProfile, validateSequence } from '../utils/pieces';
 import { sound } from '../utils/audio';
-import { license } from '../utils/license';
 import { shuffle, toFa, useCurrentLesson } from '../utils/lessonState';
 import { LessonPicker } from './shared/LessonPicker';
 import { GameHeader } from './shared/GameHeader';
@@ -58,8 +57,6 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
   const [solved, setSolved] = useState(false);
   const [revealPeels, setRevealPeels] = useState(0);
   const [roundDone, setRoundDone] = useState(false);
-  const [hasLicense, setHasLicense] = useState(false);
-  useEffect(() => { license.init().then(() => license.checkLicense()).then(l => setHasLicense(l.isPurchased)); }, []);
   const [guideOpen, setGuideOpen] = useState(false);
   // بار اولِ ورود: راهنمای قدم‌به‌قدم
   useEffect(() => { if (guideSeen()) return; const t = window.setTimeout(() => setGuideOpen(true), 700); return () => window.clearTimeout(t); }, []);

@@ -14,6 +14,8 @@ import { SentenceBuilder } from './components/SentenceBuilder';
 import { WordVillage } from './components/WordVillage';
 import { MyProgress } from './components/MyProgress';
 import { ExitDialog } from './components/ExitDialog';
+import { PaywallDialog } from './components/PaywallDialog';
+import { initBilling } from './utils/billing';
 import { ActiveScreen, UserProgress } from './types';
 import { loadProgress, recordActivityCompleted } from './utils/progressStorage';
 import { sound } from './utils/audio';
@@ -28,7 +30,7 @@ const RESUMABLE: Partial<Record<ActiveScreen, string>> = { recognition_village: 
 const readResume = (): ActiveScreen | null => { try { const v = localStorage.getItem(RESUME_KEY) as ActiveScreen | null; return v && RESUMABLE[v] ? v : null; } catch { return null; } };
 
 export default function App() {
-  return <><AppScreens /><ExitDialog /></>;
+  return <><AppScreens /><PaywallDialog /><ExitDialog /></>;
 }
 
 function AppScreens() {
@@ -40,7 +42,7 @@ function AppScreens() {
   const [progressFrom, setProgressFrom] = useState<ActiveScreen | null>(null);
   const complete = useCallback((type:'letter'|'word'|'math', id?:string)=>setProgress(recordActivityCompleted(type,id)),[]);
   const navigate = (next:ActiveScreen) => { sound.playPop(); setScreen(next); };
-  useEffect(()=>{ initBackNavigation(); initNativeChrome(); },[]);
+  useEffect(()=>{ initBackNavigation(); initNativeChrome(); initBilling(); },[]);
   useEffect(()=>{ setStatusBarColor(STATUS_COLORS[screen] || '#FFD25A'); },[screen]);
   useEffect(()=>{ if(RESUMABLE[screen]) { try { localStorage.setItem(RESUME_KEY, screen); } catch { /* ignore */ } } },[screen]);
   const toStart = () => { setSkipNativeSplash(true); navigate('splash'); };

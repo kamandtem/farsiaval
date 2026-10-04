@@ -4,6 +4,7 @@ import { CURRICULUM, kidDisplay, lessonForToday, weekLabel } from '../../data/cu
 import { toFa, useCurrentLesson } from '../../utils/lessonState';
 import { sound } from '../../utils/audio';
 import { useBackHandler } from '../../utils/backNav';
+import { isLessonLocked, useFullVersion } from '../../utils/billing';
 import { CloseArt } from './ArtButtons';
 import { SignText } from './SignText';
 
@@ -11,6 +12,7 @@ import { SignText } from './SignText';
 export const LessonSheet: React.FC<{ open: boolean; onClose: () => void }> = ({ open, onClose }) => {
   const [lesson, setLesson] = useCurrentLesson();
   const today = lessonForToday();
+  useFullVersion(); // بعد از خرید قفل‌ها فوراً برداشته شوند
   useBackHandler(() => { onClose(); }, open);
   if (!open) return null;
   return <div className="kid-sheet-backdrop" onClick={onClose}>
@@ -21,9 +23,11 @@ export const LessonSheet: React.FC<{ open: boolean; onClose: () => void }> = ({ 
         <CloseArt className="sheet-close" onClick={onClose} />
       </header>
       <div className="lesson-tiles">
-        {CURRICULUM.map(l => <button key={l.id}
-          className={`lesson-tile ${l.order === lesson ? 'active' : ''} ${l.order < lesson ? 'done' : ''} ${l.part === 2 ? 'part2' : ''}`}
-          onClick={() => { setLesson(l.order); sound.playPop(); sound.playLetter(l.order); window.setTimeout(onClose, 180); }}>
+        {CURRICULUM.map(l => { const locked = isLessonLocked(l.order); return <button key={l.id}
+          className={`lesson-tile ${l.order === lesson ? 'active' : ''} ${l.order < lesson ? 'done' : ''} ${l.part === 2 ? 'part2' : ''} ${locked ? 'locked' : ''}`}
+          aria-label={locked ? `درس ${toFa(l.order)} (قفل)` : undefined}
+          onClick={() => { sound.playPop(); if (setLesson(l.order)) { sound.playLetter(l.order); window.setTimeout(onClose, 180); } }}>
+          {locked && <span className="lesson-tile-lock" aria-hidden="true">🔒</span>}
           <span className="lesson-tile-num">{toFa(l.order)}</span>
           {l.order === 27
             ? <b className="tahriri lesson-tile-forms" aria-label="شکل‌های حرف ه">
@@ -32,7 +36,7 @@ export const LessonSheet: React.FC<{ open: boolean; onClose: () => void }> = ({ 
             : <b className="tahriri"><SignText text={l.sign} /></b>}
           <small>{weekLabel(l.week)}</small>
           {l.order === today && <em>امروز ⭐</em>}
-        </button>)}
+        </button>; })}
       </div>
     </section>
   </div>;

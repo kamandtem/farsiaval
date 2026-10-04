@@ -12,6 +12,7 @@ export RELEASE_STORE_FILE="$SECRETS/$RELEASE_STORE_FILE"
 npm run lint && npm run build
 [ -d android ] || npx cap add android
 npm run assets:generate && npx cap sync android
+node scripts/patch-android.mjs
 (cd android && ./gradlew -I "$ROOT/scripts/release.gradle" assembleRelease)
 mkdir -p release
 OUT="release/alfba-island-${RELEASE_VERSION_NAME}.apk"

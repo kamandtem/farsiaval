@@ -9,13 +9,14 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "android:add": "npm run build && npx cap add android",
-    "android:sync": "npm run build && npx cap sync android",
+    "android:add": "npm run build && npx cap add android && node scripts/patch-android.mjs",
+    "android:sync": "npm run build && npx cap sync android && node scripts/patch-android.mjs",
     "android:open": "npx cap open android",
     "assets:generate": "capacitor-assets generate --android",
     "release:check": "npm run lint && npm run build",
     "release:android:win": "scripts\\build-release.cmd",
-    "release:android": "bash scripts/build-release.sh"
+    "release:android": "bash scripts/build-release.sh",
+    "android:patch": "node scripts/patch-android.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
@@ -33,7 +34,7 @@
     "@capacitor/app": "^7.0.1",
     "@capacitor/status-bar": "^7.0.1",
     "@capacitor-community/text-to-speech": "^6.1.0",
-    "poolakey": "^3.0.0"
+    "capacitor-bazaar-billing": "file:./plugins/capacitor-bazaar-billing"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

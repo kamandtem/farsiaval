@@ -274,3 +274,20 @@ img{-webkit-user-drag:none}
 @keyframes roundPop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
 @keyframes roundBounce{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-8px) rotate(4deg)}}
 @keyframes roundConfetti{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(520px) rotate(540deg)}}
+
+/* ---------- قفل درس و پنجرهٔ خرید (کافه‌بازار) ---------- */
+.lesson-tile.locked{opacity:.62;filter:grayscale(.55)}
+.lesson-tile-lock{position:absolute;top:4px;left:7px;font-size:.9rem;line-height:1}
+.paywall-scene{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:calc(var(--sat,0px) + 16px) 16px calc(var(--sab,0px) + 16px);background:rgba(20,45,80,.5);animation:fadeIn .18s ease-out}
+.paywall-panel{width:min(92vw,420px);padding:22px 20px 18px;border:4px solid #FFE3A3;border-radius:28px;background:#fffdf4;color:var(--brown);font-family:var(--ui-font);text-align:center;box-shadow:0 6px 0 #F0CC7A,0 18px 34px rgba(30,40,60,.3)}
+.paywall-emoji{font-size:3rem;line-height:1.1}
+.paywall-panel h2{margin:6px 0 8px;font-size:1.35rem;font-weight:900;color:#E4572E}
+.paywall-panel p{margin:0 0 10px;font-size:.95rem;line-height:1.8;font-weight:700}
+.paywall-note{font-size:.8rem!important;color:#9a7440}
+.paywall-error{padding:8px 10px;border-radius:14px;background:#FFE6E0;color:#B2361A}
+.paywall-buy{width:100%;margin-top:4px;padding:13px 10px;border:3px solid #fff;border-radius:20px;background:linear-gradient(180deg,#5BD47C,#2FAE57);color:#fff;font:inherit;font-size:1.1rem;font-weight:900;box-shadow:0 5px 0 #23853F;cursor:pointer}
+.paywall-buy:disabled{opacity:.7}
+.paywall-buy:active{transform:translateY(3px);box-shadow:0 2px 0 #23853F}
+.paywall-actions{display:flex;gap:10px;margin-top:12px}
+.paywall-actions button{flex:1;padding:9px 6px;border:3px solid #FFE3A3;border-radius:16px;background:#fff;color:var(--brown);font:inherit;font-size:.9rem;font-weight:800;box-shadow:0 3px 0 #F0CC7A;cursor:pointer}
+.paywall-actions button:disabled{opacity:.5}
