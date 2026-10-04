@@ -16,6 +16,8 @@ import { CloseArt, OkArt } from './shared/ArtButtons';
 import { SyllableGame } from './SyllableGame';
 import { RoundComplete } from './shared/RoundComplete';
 import { SignText } from './shared/SignText';
+import { WordPic } from './shared/WordPic';
+import { wordImage } from '../data/wordImages';
 
 type Place = { left: number; top: number; w: number; ratio: number; bb: [number, number, number, number] };
 const HR = 258 / 246;
@@ -445,7 +447,8 @@ const LetterHunt: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = (
   const [fb, setFb] = useState<FeedbackState>(null);
   const total = cells.filter(c => c.isTarget).length;
   const autoNext = useAutoNext();
-  useEffect(() => { setFound([]); sound.playLetter(lesson.order); }, [round]); // eslint-disable-line
+  // صدای نشانه خودکار پخش نمی‌شود؛ فقط با زدن بلندگو
+  useEffect(() => { setFound([]); }, [round]); // eslint-disable-line
 
   const tap = (c: typeof cells[number]) => {
     if (found.includes(c.id)) return;
@@ -490,7 +493,7 @@ const lessonPictureWords = (order: number): LikeWord[] => {
   const add = (word: string, emoji = '') => {
     const plain = plainWord(word);
     // «چی مثلِ چی» و فلش‌کارت بازی تصویری‌اند: واژهٔ بی‌تصویر اینجا نمی‌آید
-    if (seen.has(plain) || !hasRealEmoji(emoji)) return;
+    if (seen.has(plain) || !(hasRealEmoji(emoji) || wordImage(word))) return;
     seen.add(plain);
     out.push({ word, emoji });
   };
@@ -521,7 +524,8 @@ const LikeWhat: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = ({ 
   const [fb, setFb] = useState<FeedbackState>(null);
   const need = options.filter(o => o.ok).length;
   const autoNext = useAutoNext();
-  useEffect(() => { setPicked([]); sound.playLetter(lesson.order); }, [round]); // eslint-disable-line
+  // صدای نشانه خودکار پخش نمی‌شود؛ فقط با زدن بلندگو
+  useEffect(() => { setPicked([]); }, [round]); // eslint-disable-line
 
   const choose = (o: typeof options[number]) => {
     if (picked.includes(o.word)) return;
@@ -533,11 +537,11 @@ const LikeWhat: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = ({ 
   };
 
   return <div className="mini-game like-game">
-    <h2 className="like-prompt"><b className="tahriri"><FormRun forms={lesson.forms} /></b> مثلِ ...؟</h2>
+    <h2 className="like-prompt"><b className="tahriri"><FormRun forms={lesson.forms} /></b> مثلِ ...؟<button type="button" className="like-speaker" onClick={() => sound.playLetter(lesson.order)} aria-label="شنیدن" disabled={sound.isSilentLetter(lesson.order)}><Volume2 /></button></h2>
     <p className="game-hint">فقط {toFa(need)} کلمه‌ای را انتخاب کن که صدای «{kidDisplay(lesson.sign)}» دارند ({toFa(picked.length)} از {toFa(need)})</p>
     <div className="like-grid">
       {options.map(o => <button key={o.word} className={`like-card ${picked.includes(o.word) ? 'picked' : ''} ${shake === o.word ? 'wrong' : ''}`} onClick={() => choose(o)}>
-        <span className="like-emoji">{o.emoji}</span><b className="tahriri">{o.word}</b>{picked.includes(o.word) && <i><Check /></i>}
+        <span className="like-emoji"><WordPic value={o.emoji} word={o.word} /></span><b className="tahriri">{o.word}</b>{picked.includes(o.word) && <i><Check /></i>}
       </button>)}
     </div>
     <div className="hunt-footer"><span>مرحلهٔ {toFa(round + 1)} از {toFa(LIKE_ROUNDS)}</span><button className="soft-btn" onClick={() => { autoNext.cancel(); if (round + 1 >= LIKE_ROUNDS) setRoundDone(true); else setRound(r => r + 1); }}><RefreshCw /> کلمه‌های تازه</button></div>
@@ -571,7 +575,7 @@ const FlashCards: React.FC<{ lesson: CurriculumLesson }> = ({ lesson }) => {
   return <div className="mini-game flash-game">
       <div className={`flash-card ${flip ? 'flipped' : ''}`} onClick={toggle} role="button" aria-label="کارت را برگردان">
       <div className="flash-face front"><b className="tahriri"><FormRun forms={lesson.forms} /></b><span>مثلِ ...؟</span><small>برای دیدن جواب، روی کارت بزن</small></div>
-      <div className="flash-face back"><span className="flash-emoji">{card.emoji}</span><b className="tahriri">{card.word}</b><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
+      <div className="flash-face back"><span className="flash-emoji"><WordPic value={card.emoji} word={card.word} /></span><b className="tahriri">{card.word}</b><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
     </div>
     <div className="flash-nav">
       <button className="soft-btn" onClick={() => go(-1)} disabled={i % cards.length === 0}><ChevronRight /> قبلی</button>

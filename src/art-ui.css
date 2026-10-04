@@ -455,3 +455,17 @@
 @keyframes guideIn{from{opacity:0;scale:.92}to{opacity:1;scale:1}}
 @keyframes guidePulse{0%,100%{box-shadow:0 0 0 200vmax oklch(22% .04 260/.62),0 0 0 4px oklch(85% .16 85)}50%{box-shadow:0 0 0 200vmax oklch(22% .04 260/.62),0 0 0 8px oklch(85% .16 85/.7)}}
 @media (prefers-reduced-motion:reduce){.wv-guide-hole,.wv-guide-emoji{animation:none}}
+
+/* ===== تغییرات تازه: بلندگو، پنجرهٔ درس ۱، تصویر واژه در بازی‌های تصویری ===== */
+.like-prompt{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.like-speaker{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:14px;background:oklch(88% .08 85);color:oklch(40% .08 75);cursor:pointer}
+.like-speaker:disabled{opacity:.4}
+.like-emoji .word-art-img,.like-emoji .word-placeholder-icon{width:3rem;height:3rem;margin-inline:auto}
+.flash-emoji .word-art-img,.flash-emoji .word-placeholder-icon{width:clamp(5rem,22vw,8rem);height:clamp(5rem,22vw,8rem);margin-inline:auto}
+.wv-popup-backdrop{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:oklch(20% .03 250/.35);animation:wvPopFade 200ms ease-out both}
+.wv-popup{display:grid;justify-items:center;gap:10px;width:min(88vw,380px);padding:20px 18px 14px;border-radius:26px;background:oklch(99% .01 85);box-shadow:0 14px 40px oklch(20% .03 250/.3);text-align:center;animation:wvPopIn 260ms cubic-bezier(.2,1.4,.4,1) both}
+.wv-popup-icon{font-size:2.4rem;line-height:1}
+.wv-popup p{margin:0;font-size:1.05rem;font-weight:900;line-height:1.8;color:oklch(38% .08 260)}
+.wv-popup-ok{width:72px;height:72px}
+@keyframes wvPopFade{from{opacity:0}to{opacity:1}}
+@keyframes wvPopIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}

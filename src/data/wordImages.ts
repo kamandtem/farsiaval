@@ -13,6 +13,8 @@ const MAP: Record<string, string> = {
   'الاغ': 'olagh', 'کلاغ': 'kalagh', 'قفس': 'ghafas',
   'حوله': 'hoole', 'کندو': 'kandoo', 'انجیر': 'anjir', 'گچ': 'gach', 'دارو': 'daroo', 'سنگ': 'sang',
   'صندوق': 'sandoogh', 'سینی': 'sini', 'سوزن': 'soozan',
+  // واژه‌هایی که قبلاً هیچ تصویری نداشتند (آیکون صفحهٔ خالی)
+  'قیف': 'ghif', 'چانه': 'chane', 'دم': 'dom', 'کله': 'kalle', 'پوست': 'poost', 'مس': 'mes', 'صف': 'saf', 'کف': 'kaf',
 };
 
 /** مسیر تصویر اختصاصی واژه، یا undefined */

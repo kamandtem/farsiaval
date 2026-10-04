@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Eraser, Flag, RefreshCw, Undo2 } from 'lucide-react';
+import { Eraser, Flag, RefreshCw, Undo2, Volume2 } from 'lucide-react';
 import { CURRICULUM, kidGlyph, LETTER_BOX } from '../data/curriculum';
 import { boardLessonWords, boardSuggestWords, dictationWords, DictationItem, findWord, WordEntry, emojiText } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
@@ -58,6 +58,9 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
   const [revealPeels, setRevealPeels] = useState(0);
   const [roundDone, setRoundDone] = useState(false);
   const [guideOpen, setGuideOpen] = useState(false);
+  /** پیام درس ۱ به‌صورت پنجرهٔ بازشو (فقط در «کلمه‌های درس» و فقط در درس ۱) */
+  const [lesson1Note, setLesson1Note] = useState(false);
+  useEffect(() => { setLesson1Note(mode === 'lesson' && lessonOrder === 1); }, [mode, lessonOrder]);
   // بار اولِ ورود: راهنمای قدم‌به‌قدم
   useEffect(() => { if (guideSeen()) return; const t = window.setTimeout(() => setGuideOpen(true), 700); return () => window.clearTimeout(t); }, []);
   const lastWord = useRef<string | null>(null);
@@ -110,16 +113,17 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
     setWords([]); setSolved(false); lastWord.current = null; setDictFilled(false);
     if (m === 'dictation') {
       setFree([]);
-      if (t) sound.speakPersian(`${speakable(t.word)}. جای خالی را پر کن`);
+      // صدای کلمه خودکار پخش نمی‌شود؛ فقط با زدن بلندگو
+      if (t) sound.speakPersian('جای خالی را پر کن');
       return;
     }
     if (m === 'lesson' && t) {
       const tokens = shuffle(t.tokens.filter(tk => parseToken(tk).kind !== 'mark'));
       setFree(tokens.map((token, i) => ({ id: uid(), token, ...slot(i) })));
-      sound.speakPersian(`کلمهٔ ${speakable(t.word)} را بساز`);
+      sound.speakPersian('این کلمه را بساز');
     } else {
       setFree([]);
-      if (t) sound.speakPersian(`کلمهٔ ${speakable(t.word)} را بنویس`);
+      if (t) sound.speakPersian('این کلمه را بنویس');
     }
   }, [slot]);
 
@@ -325,7 +329,7 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
   };
 
   const dragFreeId = drag?.kind === 'free' && drag.moved ? drag.id : null;
-  useBackHandler(() => { if (guideOpen) { setGuideOpen(false); return; } if (islandOpen) { setIslandOpen(false); return; } if (dictChooser) { setDictChooser(false); return; } if (boxOpen) { setBoxOpen(false); return; } onBack(); });
+  useBackHandler(() => { if (guideOpen) { setGuideOpen(false); return; } if (lesson1Note) { setLesson1Note(false); return; } if (islandOpen) { setIslandOpen(false); return; } if (dictChooser) { setDictChooser(false); return; } if (boxOpen) { setBoxOpen(false); return; } onBack(); });
   const dragWord = drag?.kind === 'word' && drag.moved ? drag : null;
   const boardRect = boardRef.current?.getBoundingClientRect();
   const hoverLine = !!drag && !!boardRect && drag.kind !== 'word' && onLine(drag.cy - boardRect.top);
@@ -366,15 +370,21 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
           title={revealedTarget ? 'شنیدن کلمه' : 'هر بار یک تکه از پوشش برداشته می‌شود'}
         >
           <span className="wv-reveal-text tahriri">{target.word}</span>
-          {!revealedTarget && <span className="wv-tap-hint" aria-hidden="true">👆</span>}
           {!revealedTarget && <span className={`wv-censor peel-${revealPeels}`} aria-hidden="true">
             {Array.from({ length: REVEAL_PIECES }, (_, i) => <i key={i} className={i >= REVEAL_PIECES - revealPeels ? 'gone' : ''} style={{ '--peel-index': i } as React.CSSProperties} />)}
           </span>}
         </button>
       </div>
+      <button type="button" className="wv-speaker" onClick={() => sound.speakPersian(speakable(target.word))} aria-label="شنیدن کلمه"><Volume2 /></button>
       <button className={`wv-next ${solved ? 'pulse' : ''}`} onClick={next}><RefreshCw /> کلمهٔ بعدی</button>
     </section>}
-    {mode === 'lesson' && lessonOrder === 1 && <p className="wv-note">در درس ۱ هنوز کلمه‌ای نداریم؛ کلمه‌های درس ۲ (آب، بابا) نمایش داده می‌شوند.</p>}
+    {lesson1Note && !guideOpen && <div className="wv-popup-backdrop" onClick={() => setLesson1Note(false)}>
+      <section className="wv-popup" role="dialog" aria-modal="true" onClick={e => e.stopPropagation()}>
+        <span className="wv-popup-icon" aria-hidden="true">📖</span>
+        <p>در درس ۱ هنوز کلمه‌ای نداریم؛ کلمه‌های درس ۲ (آب، بابا) نمایش داده می‌شوند.</p>
+        <OkArt className="wv-popup-ok" onClick={() => { sound.playPop(); setLesson1Note(false); }} />
+      </section>
+    </div>}
     {mode === 'dictation' && !dictList.length && <p className="wv-note">برای این نشانه هنوز کلمه‌ای برای دیکته نداریم؛ «کلمه‌های درس» را تمرین کن.</p>}
     {mode === 'suggest' && !suggestList.length && <p className="wv-note">برای این نشانه هنوز کلمهٔ تازه‌ای بیرون از کتاب نداریم که فقط با حرف‌های خوانده‌شده نوشته شود؛ «کلمه‌های درس» را تمرین کن.</p>}
     {mode === 'free' && <p className="wv-note">هر کلمه‌ای دوست داری بساز؛ هر وقت کلمه‌ات تمام شد دکمهٔ «پایان» را بزن.</p>}
