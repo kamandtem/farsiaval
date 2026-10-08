@@ -1,0 +1,6 @@
+{
+  "name": "تخته جادویی الفبا و ریاضی",
+  "description": "اپلیکیشن تعاملی و بازی آموزشی الفبای فارسی، تخته مغناطیسی، تمرین نوشتن و ریاضی پایه اول ابتدایی",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

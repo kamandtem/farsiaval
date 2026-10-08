@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="com.farsitel.bazaar.permission.PAY_THROUGH_BAZAAR" />
+    <!-- Android 11+ package visibility: without this the app can't see/bind to Bazaar -->
+    <queries>
+        <package android:name="com.farsitel.bazaar" />
+        <intent>
+            <action android:name="ir.cafebazaar.pardakht.InAppBillingService.BIND" />
+        </intent>
+    </queries>
+</manifest>
