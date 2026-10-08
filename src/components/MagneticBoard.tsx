@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { CheckCircle2, Eraser, Hand, Lightbulb, RotateCcw } from 'lucide-react';
+import { CheckCircle2, Eraser, Hand, Lightbulb, RotateCcw, Volume2 } from 'lucide-react';
 import { PERSIAN_LETTERS, HARAKAT_LIST } from '../data/persianAlphabet';
 import { FIRST_GRADE_WORDS } from '../data/words';
 import { PersianLetter, PlacedMagneticPiece, WordItem } from '../types';
@@ -251,7 +251,7 @@ export const MagneticBoard: React.FC<Props> = ({ onActivityComplete }) => {
       <div className="board-tools">
         <button onClick={detach} aria-label="جدا کردن"><RotateCcw/></button><button onClick={clear} aria-label="پاک کردن"><Eraser/></button>
       </div>
-      {clusters.some(c=>c.matchedWord)&&<div className="recognized-ribbon">{clusters.filter(c=>c.matchedWord).map(c=><button key={c.id} onClick={()=>sound.speakPersian(c.matchedWord!.word)}><CheckCircle2/> {c.matchedWord!.word}</button>)}</div>}
+      {clusters.some(c=>c.matchedWord)&&<div className="recognized-ribbon">{clusters.filter(c=>c.matchedWord).map(c=><button key={c.id} onClick={()=>sound.speakWord(c.matchedWord!.word)}><CheckCircle2/> {c.matchedWord!.word}<Volume2/></button>)}</div>}
       {toast&&<div className="praise-toast" role="status"><WordPic value={toast.imageEmoji} word={toast.word} /><div><b>آفرین! 👏</b><small>کلمه «{toast.word}» رو ساختی</small></div></div>}
       {wrongTashdid&&<div className="praise-toast mistake-toast" role="status"><span>🔁</span><div><b>دوباره تلاش کن</b><small>تشدید را دقیقاً بالای همان حرف بگذار</small></div></div>}
     </div>

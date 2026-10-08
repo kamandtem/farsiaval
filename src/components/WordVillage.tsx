@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Eraser, Flag, RefreshCw, Undo2 } from 'lucide-react';
+import { Eraser, Flag, RefreshCw, Undo2, Volume2 } from 'lucide-react';
 import { CURRICULUM, kidGlyph, LETTER_BOX } from '../data/curriculum';
 import { boardLessonWords, boardSuggestWords, dictationWords, DictationItem, findWord, WordEntry, emojiText } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
@@ -406,7 +406,7 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
         const x = moving ? dragWord!.cx - boardRect!.left - dragWord!.ox : w.x;
         const y = moving ? dragWord!.cy - boardRect!.top - dragWord!.oy : lineY;
         return <div key={w.id} className={`wv-word ${w.closed ? 'closed' : ''} ${w.status || ''} ${shakeWord === w.id ? 'shake' : ''}`} style={{ right: size.w - x, top: y }}>
-          <span ref={el => { if (el) wordRefs.current.set(w.id, el); else wordRefs.current.delete(w.id); }} className="tahriri wv-word-text" onPointerDown={e => startWord(e, w)}>{renderSequence(defs)}</span>
+          <span ref={el => { if (el) wordRefs.current.set(w.id, el); else wordRefs.current.delete(w.id); }} className="tahriri wv-word-text" onPointerDown={e => startWord(e, w)}>{renderSequence(defs)}</span><button className="wv-word-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(w.seq.map(s=>parseToken(s.token).glyph).join(''))}}><Volume2/></button>
           {!w.closed && <button className="wv-pop" onClick={() => popLast(w)} aria-label="برداشتن حرف آخر"><Undo2 /></button>}
         </div>;
       })}

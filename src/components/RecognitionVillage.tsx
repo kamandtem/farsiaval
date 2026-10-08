@@ -525,7 +525,7 @@ const LikeWhat: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = ({ 
 
   const choose = (o: typeof options[number]) => {
     if (picked.includes(o.word)) return;
-    sound.speakPersian(o.word.replace(/[\u064B-\u0652]/g, ''));
+    sound.speakWord(o.word);
     if (o.ok) {
       const n = [...picked, o.word]; setPicked(n); sound.playPop();
       if (n.length === need) { sound.playSuccess(); const p = praise(); setFb({ tone: 'good', text: `${p} همهٔ کلمه‌های «${kidDisplay(lesson.sign)}» را پیدا کردی.` }); onDone(); autoNext(() => { if (round + 1 >= LIKE_ROUNDS) setRoundDone(true); else setRound(r => r + 1); }); }
@@ -537,7 +537,7 @@ const LikeWhat: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = ({ 
     <p className="game-hint">فقط {toFa(need)} کلمه‌ای را انتخاب کن که صدای «{kidDisplay(lesson.sign)}» دارند ({toFa(picked.length)} از {toFa(need)})</p>
     <div className="like-grid">
       {options.map(o => <button key={o.word} className={`like-card ${picked.includes(o.word) ? 'picked' : ''} ${shake === o.word ? 'wrong' : ''}`} onClick={() => choose(o)}>
-        <span className="like-emoji">{o.emoji}</span><b className="tahriri">{o.word}</b>{picked.includes(o.word) && <i><Check /></i>}
+        <span className="like-emoji">{o.emoji}</span><b className="tahriri">{o.word}</b><span className="word-card-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(o.word)}}><Volume2/></span>{picked.includes(o.word)&&<i><Check/></i>}
       </button>)}
     </div>
     <div className="hunt-footer"><span>مرحلهٔ {toFa(round + 1)} از {toFa(LIKE_ROUNDS)}</span><button className="soft-btn" onClick={() => { autoNext.cancel(); if (round + 1 >= LIKE_ROUNDS) setRoundDone(true); else setRound(r => r + 1); }}><RefreshCw /> کلمه‌های تازه</button></div>
@@ -567,11 +567,11 @@ const FlashCards: React.FC<{ lesson: CurriculumLesson }> = ({ lesson }) => {
     window.setTimeout(() => setI(x => (x + d + cards.length) % cards.length), 180);
   };
   // بعد از دیدن جواب (پشت کارت)، خودکار کارت بعدی می‌آید
-  const toggle = () => { const toBack = !flip; setFlip(toBack); if (toBack) { sound.speakPersian(card.word.replace(/[\u064B-\u0652]/g, '')); autoNext(() => go(1), 2600); } else { autoNext.cancel(); sound.playLetter(lesson.order); } };
+  const toggle = () => { const toBack = !flip; setFlip(toBack); if (toBack) { sound.speakWord(card.word); autoNext(() => go(1), 2600); } else { autoNext.cancel(); sound.playLetter(lesson.order); } };
   return <div className="mini-game flash-game">
       <div className={`flash-card ${flip ? 'flipped' : ''}`} onClick={toggle} role="button" aria-label="کارت را برگردان">
       <div className="flash-face front"><b className="tahriri"><FormRun forms={lesson.forms} /></b><span>مثلِ ...؟</span><small>برای دیدن جواب، روی کارت بزن</small></div>
-      <div className="flash-face back"><span className="flash-emoji">{card.emoji}</span><b className="tahriri">{card.word}</b><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
+      <div className="flash-face back"><span className="flash-emoji">{card.emoji}</span><b className="tahriri">{card.word}</b><button className="flash-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(card.word)}}><Volume2/> شنیدن کلمه</button><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
     </div>
     <div className="flash-nav">
       <button className="soft-btn" onClick={() => go(-1)} disabled={i % cards.length === 0}><ChevronRight /> قبلی</button>

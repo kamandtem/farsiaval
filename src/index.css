@@ -348,3 +348,5 @@
 .box-key.dict.later{opacity:.35}
 @keyframes dictSnap{0%{transform:scale(.86)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.dict-word.solved,.dict-word.shake{animation:none}}
+
+.word-card-speaker,.flash-speaker,.syl-word-speaker,.wv-word-speaker{display:inline-flex;align-items:center;justify-content:center;gap:5px;border:0;border-radius:12px;background:#fff3bd;color:#8a5a20;box-shadow:0 3px 0 #e2be55;padding:7px 9px;cursor:pointer}.like-card{position:relative}.like-card .word-card-speaker{position:absolute;top:7px;left:7px;padding:6px;border-radius:10px}.syl-word-speaker{margin-inline-start:6px;padding:9px;border-radius:50%}.wv-word{position:relative}.wv-word-speaker{position:absolute;inset-inline-end:-44px;top:50%;transform:translateY(-50%);padding:7px;border-radius:50%;z-index:2}

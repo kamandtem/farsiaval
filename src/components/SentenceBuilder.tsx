@@ -65,8 +65,8 @@ export const SentenceBuilder: React.FC<{ onBack: () => void; onComplete: (t: 'wo
     if (!sentence) return;
     const ok = order.map(i => words[i]).join(' ') === sentence.text;
     setResult(ok ? 'good' : 'try');
-    if (ok) { sound.playSuccess(); sound.speakPersian(`آفرین! ${plain(sentence.text)}`); onComplete('word', sentence.id); storeSentence(sentence.text); window.clearTimeout(autoTimer.current); autoTimer.current = window.setTimeout(nextSentence, 2400); /* خودکار ← جملهٔ بعدی */ }
-    else sound.speakPersian('نزدیک بودی، دوباره امتحان کن');
+    if (ok) { sound.playSuccess(); onComplete('word', sentence.id); storeSentence(sentence.text); window.clearTimeout(autoTimer.current); autoTimer.current = window.setTimeout(nextSentence, 2400); /* خودکار ← جملهٔ بعدی */ }
+    else { /* جمله‌سازی عمداً بدون صدای گفتاری است. */ }
   };
   return <main className="sentence-screen" dir="rtl">
     <GameHeader kicker="دهکدهٔ سوم" title="جمله‌سازی" emoji="💬" tone="sky" onBack={onBack}><LessonPicker compact /></GameHeader>
@@ -90,7 +90,7 @@ export const SentenceBuilder: React.FC<{ onBack: () => void; onComplete: (t: 'wo
     {listOpen && <div className="sentence-list-backdrop" onClick={() => setListOpen(false)}>
       <section className="sentence-list" onClick={e => e.stopPropagation()} aria-label="جمله‌هایی که ساختی">
         <header><img src="/assets/ui/letter-chest.svg" alt="" draggable={false} /><div><b>جمله‌هایی که ساختی</b><small>روی هر جمله بزن تا آن را بشنوی</small></div><CloseArt onClick={() => setListOpen(false)} /></header>
-        {done.length ? <ol>{done.map((t, i) => <li key={t}><em>{toFa(i + 1)}</em><button className="tahriri" onClick={() => sound.speakPersian(plain(t))}>{t}</button></li>)}</ol>
+        {done.length ? <ol>{done.map((t, i) => <li key={t}><em>{toFa(i + 1)}</em><button className="tahriri">{t}</button></li>)}</ol>
           : <p className="sentence-list-empty">هنوز جمله‌ای نساخته‌ای. هر جمله‌ای که درست بسازی، این‌جا می‌آید.</p>}
       </section>
     </div>}

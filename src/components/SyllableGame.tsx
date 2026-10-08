@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { ChevronLeft, RotateCcw } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Volume2 } from 'lucide-react';
 import { CURRICULUM, CurriculumLesson, bookLessonOf, kidDisplay } from '../data/curriculum';
 import { boardLessonWords, WORD_BANK, emojiText, hasRealEmoji } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
@@ -26,6 +26,7 @@ const emojiOf = (w: string) => WORD_BANK.find(e => e.plain === plainWord(w))?.em
 /** ۳ تا ۴ واژه برای درس انتخاب‌شده؛ فقط واژه‌هایی که همهٔ نشانه‌هایشان خوانده شده */
 export function syllableWordsFor(order: number): string[] {
   const o = Math.max(1, order);
+  if (o === 23) return ['کمک', 'قاشُق', 'قُرآن', 'قَندان'];
   if (SYLLABLE_EXCEPTION_WORDS[o]) return SYLLABLE_EXCEPTION_WORDS[o];
   const book = bookLessonOf(o);
   const out: string[] = [];
@@ -504,7 +505,7 @@ export const SyllableGame: React.FC<{ lesson: CurriculumLesson; onDone: () => vo
       </div>
       {!combinationConsonants.length && <p className="combination-empty">با خواندن درس «بـ ب»، صامت‌ها یکی‌یکی اینجا اضافه می‌شوند.</p>}
     </section> : soundOnly ? <section className="syl-sounds">
-      <div className="syl-word-card"><WordPic className="syl-emoji" value={emojiOf(word)} /><b className="tahriri" onClick={() => sound.speakPersian(speakable(word))}>{word}</b></div>
+      <div className="syl-word-card"><WordPic className="syl-emoji" value={emojiOf(word)} /><b className="tahriri">{word}</b><button className="syl-word-speaker" onClick={()=>sound.speakWord(word)}><Volume2/></button></div>
       <div className="syl-tray" aria-label="صداهای درهم">{chips.map(c => <button key={c.id} className={`syl-chip tahriri ${c.used ? 'used' : ''} ${picked === c.id ? 'picked' : ''} ${c.cell.mark ? 'is-mark' : ''}`} onPointerDown={e => chipDown(e, c)} disabled={c.used}>{soundGlyph(c.cell)}</button>)}</div>
       <div className="syl-circles">{parsed.cells.map((c, j) => cellView(c, j, 'circle'))}</div>
     </section> :

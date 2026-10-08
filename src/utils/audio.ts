@@ -6,6 +6,7 @@
 import { Capacitor } from '@capacitor/core';
 import { TextToSpeech, QueueStrategy } from '@capacitor-community/text-to-speech';
 import { letterClip, isSilentLesson, lessonOfLetterId, lessonOfGlyph } from './letterAudio';
+import { wordAudioSrc } from './wordAudio';
 
 const AUDIO_KEY = 'alefba_audio_v1';
 /** سقف صدای موسیقی پس‌زمینه: عمداً خیلی پایین تا حواس کودک پرت نشود */
@@ -343,6 +344,8 @@ class SoundEngine {
    * در APK اندروید: موتور Text-to-Speech بومی اندروید (fa-IR).
    * در مرورگر: Web Speech API به‌عنوان جایگزین.
    */
+  public speakWord(word: string) { const clean=(word??'').toString().trim(); if(!clean)return; const src=wordAudioSrc(clean); if(!src){this.speakPersian(clean);return;} this.stopSpeech(); const el=new Audio(src); el.volume=this.settings.sfx; el.play().catch(()=>this.speakPersian(clean)); }
+
   public speakPersian(text: string) {
     if (this.isMuted || this.settings.sfx <= 0) return;
     const clean = (text ?? '').toString().trim();
