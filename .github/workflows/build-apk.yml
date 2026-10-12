@@ -54,6 +54,14 @@ jobs:
         run: |
           set -euo pipefail
           ./gradlew -I ../scripts/release.gradle assembleRelease
+      - name: Verify APK version
+        run: |
+          set -euo pipefail
+          expected="$(grep '^VERSION_CODE=' version.properties | cut -d= -f2 | tr -d '\r ')"
+          AAPT="$(ls "$ANDROID_HOME"/build-tools/*/aapt | sort -V | tail -1)"
+          badging="$("$AAPT" dump badging android/app/build/outputs/apk/release/app-release.apk | head -1)"
+          echo "$badging"
+          echo "$badging" | grep -q "versionCode='${expected}'" || { echo "::error::APK versionCode != ${expected}"; exit 1; }
       - name: Rename APK and create checksum
         run: |
           set -euo pipefail
