@@ -36,9 +36,10 @@ call gradlew.bat -I "%ROOT%\scripts\release.gradle" assembleRelease || ( popd & 
 popd
 
 if not exist release mkdir release
-set "OUT=release\alfba-island-%RELEASE_VERSION_NAME%.apk"
+for /f "tokens=1,* delims==" %%a in (version.properties) do if "%%a"=="VERSION_NAME" set "VN=%%b"
+set "OUT=release\alfba-island-%VN%.apk"
 copy /y "android\app\build\outputs\apk\release\app-release.apk" "%OUT%" >nul || exit /b 1
 echo.
 echo [DONE] Bazaar-ready APK: %OUT%
-echo Next release: increase RELEASE_VERSION_CODE by 1.
+echo Next release: increase VERSION_CODE in version.properties by 1.
 endlocal

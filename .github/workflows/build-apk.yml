@@ -51,20 +51,13 @@ jobs:
           RELEASE_STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          RELEASE_VERSION_CODE: ${{ github.run_number }}
         run: |
           set -euo pipefail
-          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
-            export RELEASE_VERSION_NAME="${GITHUB_REF_NAME#v}"
-          else
-            export RELEASE_VERSION_NAME="1.0.0-ci.${GITHUB_RUN_NUMBER}"
-          fi
           ./gradlew -I ../scripts/release.gradle assembleRelease
       - name: Rename APK and create checksum
         run: |
           set -euo pipefail
-          version="${GITHUB_REF_NAME#v}"
-          if [[ "$GITHUB_REF_TYPE" != "tag" ]]; then version="1.0.0-ci.${GITHUB_RUN_NUMBER}"; fi
+          version="$(grep '^VERSION_NAME=' version.properties | cut -d= -f2 | tr -d '\r ')"
           mkdir -p release
           cp android/app/build/outputs/apk/release/app-release.apk "release/alfba-island-${version}.apk"
           sha256sum "release/alfba-island-${version}.apk" > "release/alfba-island-${version}.sha256"

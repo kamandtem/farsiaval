@@ -33,9 +33,21 @@ gradle.beforeProject { project ->
         android.buildTypes.getByName("release").signingConfig = releaseSigning
         android.buildTypes.getByName("release").minifyEnabled = false
 
-        def versionName = System.getenv("RELEASE_VERSION_NAME")
-        def versionCode = System.getenv("RELEASE_VERSION_CODE")
-        if (versionName != null && !versionName.trim().isEmpty()) {
+        // نسخه: اول از version.properties (کنار package.json)، و اگر متغیر محیطی بود آن اولویت دارد.
+        def versionName = null
+        def versionCode = null
+        def vf = project.rootProject.file("../version.properties")
+        if (vf.exists()) {
+            def props = new Properties()
+            vf.withInputStream { props.load(it) }
+            versionName = props.getProperty("VERSION_NAME")?.trim()
+            versionCode = props.getProperty("VERSION_CODE")?.trim()
+        }
+        def envName = System.getenv("RELEASE_VERSION_NAME")
+        def envCode = System.getenv("RELEASE_VERSION_CODE")
+        if (envName != null && !envName.trim().isEmpty()) { versionName = envName.trim() }
+        if (envCode != null && !envCode.trim().isEmpty()) { versionCode = envCode.trim() }
+        if (versionName != null && !versionName.isEmpty()) {
             android.defaultConfig.versionName = versionName
         }
         if (versionCode != null && versionCode.isInteger()) {

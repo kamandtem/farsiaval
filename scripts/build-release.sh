@@ -15,6 +15,7 @@ npm run assets:generate && npx cap sync android
 node scripts/patch-android.mjs
 (cd android && ./gradlew -I "$ROOT/scripts/release.gradle" assembleRelease)
 mkdir -p release
-OUT="release/alfba-island-${RELEASE_VERSION_NAME}.apk"
+VN="$(grep '^VERSION_NAME=' version.properties | cut -d= -f2 | tr -d '\r ')"
+OUT="release/alfba-island-${VN}.apk"
 cp android/app/build/outputs/apk/release/app-release.apk "$OUT"
 echo "تمام: $OUT  (نسخهٔ بعدی: RELEASE_VERSION_CODE را یکی بیشتر کن)"
