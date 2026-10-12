@@ -6,6 +6,7 @@ import { WordPic } from './shared/WordPic';
 import { lessonOfWord, plainWord } from '../utils/pieces';
 import { parseSyllables, ParsedWord, SoundCell, SOUND_ONLY_UNTIL_BOOK, SYLLABLE_EXCEPTION_WORDS, SYLLABLE_EXCLUDED_WORDS, SYLLABLE_WORDS } from '../utils/syllables';
 import { sound } from '../utils/audio';
+import { wordAudioSrc } from '../utils/wordAudio';
 import { shuffle, toFa } from '../utils/lessonState';
 import { vibrate } from '../utils/native';
 import { FeedbackState, FeedbackToast, praise } from './shared/Feedback';
@@ -299,7 +300,7 @@ export const SyllableGame: React.FC<{ lesson: CurriculumLesson; onDone: () => vo
     window.clearTimeout(timer.current);
     setStage(soundOnly ? 2 : 1); setSylDone(parsed.syllables.map(() => false)); setSel(null); setPicked(null);
     setFilled(parsed.cells.map(() => null)); setChips(makeChips(parsed));
-    sound.speakPersian(soundOnly ? `صداهای کلمهٔ ${speakable(word)} را جدا کن` : `کلمهٔ ${speakable(word)} را بخش بخش کن`);
+    if (wordAudioSrc(word)) sound.speakWord(word); else sound.speakPersian(soundOnly ? `صداهای کلمهٔ ${speakable(word)} را جدا کن` : `کلمهٔ ${speakable(word)} را بخش بخش کن`);
   }, [word, parsed, soundOnly, makeChips]);
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
@@ -514,6 +515,7 @@ export const SyllableGame: React.FC<{ lesson: CurriculumLesson; onDone: () => vo
       <div className={`syl-row1 ${stage === 1 ? 'active' : ''}`} style={{ gridColumn: `1 / span ${N}`, touchAction: 'none' }} onPointerDown={rowDown}>
         {hasRealEmoji(emojiOf(word)) && <span className="syl-emoji small">{emojiOf(word)}</span>}
         <SelectableWord parsed={parsed} usedUnits={usedUnits} sel={sel} zoneRef={zoneRef} />
+        <button type="button" className="syl-word-speaker syl-row1-speaker" aria-label="شنیدن کلمه" title="شنیدن کلمه" onPointerDown={e => e.stopPropagation()} onClick={e => { e.stopPropagation(); sound.speakWord(word); }}><Volume2 /></button>
       </div>
       {/* طبقهٔ دوم: خانه‌های بخش (به تعداد هجاها) */}
       {parsed.syllables.map((s, k) => <div key={`s${k}`} data-drop={`syl:${k}`} onClick={() => placeSyllable(k)} style={{ gridColumn: `span ${s.cells.length}` }}

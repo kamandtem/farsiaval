@@ -624,6 +624,21 @@ export const WORD_AUDIO_INDEX: Record<string, number> = {
   "محسن": 621,
   "آزادی": 622,
   "خانواده": 623,
-  "کلاس": 624
+  "کلاس": 624,
+  "توتو": 625,
+  "آواز": 626,
+  "توان": 627,
+  "در": 628,
+  "من": 629,
+  "رشته": 630,
+  "شیرین": 631,
+  "کمد": 632,
+  "بادبادک": 633,
+  "فیل": 634,
+  "باب": 635,
+  "بینی": 636,
+  "یخ": 637,
+  "نردبان": 638,
+  "دانشمند": 639
 };
 export const wordAudioSrc = (word: string) => { const n = WORD_AUDIO_INDEX[wordAudioKey(word)]; return n ? `${WORD_AUDIO_PREFIX}${String(n).padStart(4,'0')}.mp3` : null; };

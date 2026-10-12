@@ -464,3 +464,6 @@
 .lock-actions{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:6px}
 .big-buy{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;border:0;border-radius:18px;background:oklch(66% .16 145);color:#fff;font-size:1rem;font-weight:1000;cursor:pointer;box-shadow:0 5px 0 oklch(52% .14 145)}
 .big-buy:active{transform:translateY(3px);box-shadow:0 2px 0 oklch(52% .14 145)}
+
+/* دکمهٔ شنیدن کلمه در بازی پنجم (بخش‌بخش کردن) */
+.syl-row1-speaker{position:absolute;top:6px;left:6px;z-index:3;min-width:40px;min-height:40px}

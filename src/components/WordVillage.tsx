@@ -5,6 +5,7 @@ import { boardLessonWords, boardSuggestWords, dictationWords, DictationItem, fin
 import { WordPic } from './shared/WordPic';
 import { finishProblem, parseToken, plainSequence, renderSequence, tashdidProfile, validateSequence } from '../utils/pieces';
 import { sound } from '../utils/audio';
+import { wordAudioSrc } from '../utils/wordAudio';
 import { shuffle, toFa, useCurrentLesson } from '../utils/lessonState';
 import { LessonPicker } from './shared/LessonPicker';
 import { GameHeader } from './shared/GameHeader';
@@ -29,6 +30,8 @@ type Drag =
 
 const uid = () => Math.random().toString(36).slice(2, 9);
 const speakable = (s: string) => s.replace(/[\u064B-\u0652\u200D]/g, '');
+/** تلفظ کلمه: اگر صدای ضبط‌شده دارد همان پخش می‌شود، وگرنه جملهٔ راهنما با صدای گوینده‌ی گوشی */
+const sayWord = (word: string, fallbackSentence: string) => { if (wordAudioSrc(word)) sound.speakWord(word); else sound.speakPersian(fallbackSentence); };
 /** سانسور دو لایه است: دو لمس برای دیدن کلمه */
 const REVEAL_PIECES = 2;
 const WordVisual = WordPic;
@@ -110,16 +113,16 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
     setWords([]); setSolved(false); lastWord.current = null; setDictFilled(false);
     if (m === 'dictation') {
       setFree([]);
-      if (t) sound.speakPersian(`${speakable(t.word)}. جای خالی را پر کن`);
+      if (t) sayWord(t.word, `${speakable(t.word)}. جای خالی را پر کن`);
       return;
     }
     if (m === 'lesson' && t) {
       const tokens = shuffle(t.tokens.filter(tk => parseToken(tk).kind !== 'mark'));
       setFree(tokens.map((token, i) => ({ id: uid(), token, ...slot(i) })));
-      sound.speakPersian(`کلمهٔ ${speakable(t.word)} را بساز`);
+      sayWord(t.word, `کلمهٔ ${speakable(t.word)} را بساز`);
     } else {
       setFree([]);
-      if (t) sound.speakPersian(`کلمهٔ ${speakable(t.word)} را بنویس`);
+      if (t) sayWord(t.word, `کلمهٔ ${speakable(t.word)} را بنویس`);
     }
   }, [slot]);
 
@@ -308,13 +311,13 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
   const revealedTarget = revealPeels >= REVEAL_PIECES;
   const revealTarget = () => {
     if (revealedTarget) {
-      sound.speakPersian(speakable(target?.word || ''));
+      if (target) sound.speakWord(target.word);
       return;
     }
     const nextPeels = Math.min(REVEAL_PIECES, revealPeels + 1);
     setRevealPeels(nextPeels);
     sound.playPop();
-    if (nextPeels === REVEAL_PIECES && target) sound.speakPersian(speakable(target.word));
+    if (nextPeels === REVEAL_PIECES && target) sound.speakWord(target.word);
   };
 
   const renderDragGhost = () => {
@@ -372,6 +375,7 @@ export const WordVillage: React.FC<{ onBack: () => void; onComplete: (t: 'word',
           </span>}
         </button>
       </div>
+      <button type="button" className="wv-target-speaker" onClick={() => sound.speakWord(target.word)} aria-label="شنیدن کلمه" title="شنیدن کلمه"><Volume2 /></button>
       <button className={`wv-next ${solved ? 'pulse' : ''}`} onClick={next}><RefreshCw /> کلمهٔ بعدی</button>
     </section>}
     {mode === 'lesson' && lessonOrder === 1 && <p className="wv-note">در درس ۱ هنوز کلمه‌ای نداریم؛ کلمه‌های درس ۲ (آب، بابا) نمایش داده می‌شوند.</p>}
