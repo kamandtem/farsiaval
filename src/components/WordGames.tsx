@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Sparkles, CheckCircle2, ChevronLeft, ChevronRight, HelpCircle, Shuffle } from 'lucide-react';
+import { WordPic } from './shared/WordPic';
 import { FIRST_GRADE_WORDS } from '../data/words';
 import { PERSIAN_LETTERS, toPersianDigits } from '../data/persianAlphabet';
 import { WordItem, PersianLetter } from '../types';
@@ -149,7 +150,7 @@ export const WordGames: React.FC<WordGamesProps> = ({ onActivityComplete }) => {
         <div className="flex flex-col items-center justify-center gap-3 my-auto">
           <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-100 border-4 border-amber-200 flex items-center justify-center text-6xl shadow-inner relative overflow-hidden group">
             <span className="drop-shadow-sm transition-transform duration-300 group-hover:scale-110">
-              {activeWord.imageEmoji}
+              <WordPic value={activeWord.imageEmoji} word={activeWord.word} />
             </span>
             {isSolved && (
               <div className="absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1 animate-bounce">

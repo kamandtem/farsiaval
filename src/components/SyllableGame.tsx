@@ -2,8 +2,9 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { ChevronLeft, RotateCcw, Volume2 } from 'lucide-react';
 import { CURRICULUM, CurriculumLesson, bookLessonOf, kidDisplay } from '../data/curriculum';
 import { getEducationalFontFamily } from '../utils/fontSettings';
-import { boardLessonWords, WORD_BANK, emojiText, hasRealEmoji } from '../data/wordBank';
+import { boardLessonWords, WORD_BANK, emojiText } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
+import { hasWordVisual } from '../data/wordImages';
 import { lessonOfWord, plainWord } from '../utils/pieces';
 import { parseSyllables, ParsedWord, SoundCell, SOUND_ONLY_UNTIL_BOOK, SYLLABLE_EXCEPTION_WORDS, SYLLABLE_EXCLUDED_WORDS, SYLLABLE_WORDS } from '../utils/syllables';
 import { sound } from '../utils/audio';
@@ -507,14 +508,14 @@ export const SyllableGame: React.FC<{ lesson: CurriculumLesson; onDone: () => vo
       </div>
       {!combinationConsonants.length && <p className="combination-empty">با خواندن درس «بـ ب»، صامت‌ها یکی‌یکی اینجا اضافه می‌شوند.</p>}
     </section> : soundOnly ? <section className="syl-sounds">
-      <div className="syl-word-card"><WordPic className="syl-emoji" value={emojiOf(word)} /><b className="tahriri">{word}</b><button className="syl-word-speaker" onClick={()=>sound.speakWord(word)}><Volume2/></button></div>
+      <div className="syl-word-card"><WordPic className="syl-emoji" value={emojiOf(word)} word={word} /><b className="tahriri">{word}</b><button className="syl-word-speaker" onClick={()=>sound.speakWord(word)}><Volume2/></button></div>
       <div className="syl-tray" aria-label="صداهای درهم">{chips.map(c => <button key={c.id} className={`syl-chip tahriri ${c.used ? 'used' : ''} ${picked === c.id ? 'picked' : ''} ${c.cell.mark ? 'is-mark' : ''}`} onPointerDown={e => chipDown(e, c)} disabled={c.used}>{soundGlyph(c.cell)}</button>)}</div>
       <div className="syl-circles">{parsed.cells.map((c, j) => cellView(c, j, 'circle'))}</div>
     </section> :
     <section className="syl-table" style={{ gridTemplateColumns: `repeat(${N}, minmax(0, 1fr))` }} aria-label="جدول بخش‌ها">
       {/* طبقهٔ اول: خود کلمه، حرف‌ها لمسی */}
       <div className={`syl-row1 ${stage === 1 ? 'active' : ''}`} style={{ gridColumn: `1 / span ${N}`, touchAction: 'none' }} onPointerDown={rowDown}>
-        {hasRealEmoji(emojiOf(word)) && <span className="syl-emoji small">{emojiOf(word)}</span>}
+        {hasWordVisual(word, emojiOf(word)) && <span className="syl-emoji small"><WordPic value={emojiOf(word)} word={word} /></span>}
         <SelectableWord parsed={parsed} usedUnits={usedUnits} sel={sel} zoneRef={zoneRef} />
         <button type="button" className="syl-word-speaker syl-row1-speaker" aria-label="شنیدن کلمه" title="شنیدن کلمه" onPointerDown={e => e.stopPropagation()} onClick={e => { e.stopPropagation(); sound.speakWord(word); }}><Volume2 /></button>
       </div>

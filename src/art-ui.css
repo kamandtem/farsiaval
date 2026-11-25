@@ -481,3 +481,14 @@
 .font-opt.on{background:linear-gradient(180deg,oklch(82% .17 145),oklch(70% .17 150));border-color:#fff;color:#fff;box-shadow:0 3px 0 oklch(50% .14 150)}
 .font-opt:focus-visible{outline:3px solid oklch(68% .17 230);outline-offset:2px}
 .sound-ok{top:58.6%;left:43%;width:14%}
+
+/* Fluent 3D Emoji: اندازهٔ یکدست در همهٔ بازی‌ها */
+.fluent-emoji-img{display:inline-block;object-fit:contain;width:1.45em;height:1.45em;vertical-align:middle}
+.wv-target-emoji .fluent-emoji-img{width:3.4rem;height:3.4rem}
+.dict-emoji .fluent-emoji-img{width:clamp(4.4rem,16vw,6.8rem);height:clamp(4.4rem,16vw,6.8rem)}
+.praise-toast .fluent-emoji-img,.challenge-chip .fluent-emoji-img{width:2.4rem;height:2.4rem}
+.kid-toast-emoji .fluent-emoji-img{width:2.2rem;height:2.2rem}
+.syl-emoji.fluent-emoji-img{width:54px;height:54px}
+.syl-emoji.small .fluent-emoji-img{width:36px;height:36px}
+.like-emoji .fluent-emoji-img{width:3.2rem;height:3.2rem}
+.flash-emoji .fluent-emoji-img{width:clamp(96px,24vw,135px);height:clamp(96px,24vw,135px)}

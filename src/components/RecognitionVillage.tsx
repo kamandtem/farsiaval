@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Check, ChevronLeft, ChevronRight, Eraser, RefreshCw, Volume2 } from 'lucide-react';
 import { CURRICULUM, CurriculumLesson, LikeWord, kidDisplay } from '../data/curriculum';
 import { getEducationalFontFamily } from '../utils/fontSettings';
+import { WordPic } from './shared/WordPic';
+import { hasWordVisual } from '../data/wordImages';
 import { boardLessonWords, WORD_BANK, hasRealEmoji } from '../data/wordBank';
 import { sound } from '../utils/audio';
 import { shuffle, toFa, useCurrentLesson } from '../utils/lessonState';
@@ -492,7 +494,7 @@ const lessonPictureWords = (order: number): LikeWord[] => {
   const add = (word: string, emoji = '') => {
     const plain = plainWord(word);
     // «چی مثلِ چی» و فلش‌کارت بازی تصویری‌اند: واژهٔ بی‌تصویر اینجا نمی‌آید
-    if (seen.has(plain) || !hasRealEmoji(emoji)) return;
+    if (seen.has(plain) || !hasWordVisual(word, emoji)) return;
     seen.add(plain);
     out.push({ word, emoji });
   };
@@ -539,7 +541,7 @@ const LikeWhat: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = ({ 
     <p className="game-hint">فقط {toFa(need)} کلمه‌ای را انتخاب کن که صدای «{kidDisplay(lesson.sign)}» دارند ({toFa(picked.length)} از {toFa(need)})</p>
     <div className="like-grid">
       {options.map(o => <button key={o.word} className={`like-card ${picked.includes(o.word) ? 'picked' : ''} ${shake === o.word ? 'wrong' : ''}`} onClick={() => choose(o)}>
-        <span className="like-emoji">{o.emoji}</span><b className="tahriri">{o.word}</b><span className="word-card-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(o.word)}}><Volume2/></span>{picked.includes(o.word)&&<i><Check/></i>}
+        <span className="like-emoji"><WordPic value={o.emoji} word={o.word} /></span><b className="tahriri">{o.word}</b><span className="word-card-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(o.word)}}><Volume2/></span>{picked.includes(o.word)&&<i><Check/></i>}
       </button>)}
     </div>
     <div className="hunt-footer"><span>مرحلهٔ {toFa(round + 1)} از {toFa(LIKE_ROUNDS)}</span><button className="soft-btn" onClick={() => { autoNext.cancel(); if (round + 1 >= LIKE_ROUNDS) setRoundDone(true); else setRound(r => r + 1); }}><RefreshCw /> کلمه‌های تازه</button></div>
@@ -573,7 +575,7 @@ const FlashCards: React.FC<{ lesson: CurriculumLesson }> = ({ lesson }) => {
   return <div className="mini-game flash-game">
       <div className={`flash-card ${flip ? 'flipped' : ''}`} onClick={toggle} role="button" aria-label="کارت را برگردان">
       <div className="flash-face front"><b className="tahriri"><FormRun forms={lesson.forms} /></b><span>مثلِ ...؟</span><small>برای دیدن جواب، روی کارت بزن</small></div>
-      <div className="flash-face back"><span className="flash-emoji">{card.emoji}</span><b className="tahriri">{card.word}</b><button className="flash-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(card.word)}}><Volume2/> شنیدن کلمه</button><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
+      <div className="flash-face back"><span className="flash-emoji"><WordPic value={card.emoji} word={card.word} /></span><b className="tahriri">{card.word}</b><button className="flash-speaker" onClick={e=>{e.stopPropagation();sound.speakWord(card.word)}}><Volume2/> شنیدن کلمه</button><small className="tahriri"><FormRun forms={lesson.forms} /> مثلِ {card.word}</small></div>
     </div>
     <div className="flash-nav">
       <button className="soft-btn" onClick={() => go(-1)} disabled={i % cards.length === 0}><ChevronRight /> قبلی</button>
