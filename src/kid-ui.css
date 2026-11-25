@@ -10,7 +10,8 @@
 html,body{font-family:var(--ui-font);-webkit-tap-highlight-color:transparent;overscroll-behavior-y:none;text-size-adjust:100%;-webkit-text-size-adjust:100%}
 body{min-height:100dvh}
 button,select,input{font-family:inherit}
-.tahriri{font-family:"Tahriri",var(--ui-font)}
+/* نام کلاس قدیمی است؛ فونت واقعی از تنظیمات می‌آید (--lesson-font) */
+.tahriri{font-family:var(--lesson-font),var(--ui-font)}
 img{-webkit-user-drag:none}
 
 /* ---------- نقشه‌های عمودی (جزیره و دهکده) ---------- */
@@ -232,7 +233,7 @@ img{-webkit-user-drag:none}
 .combination-vowel-group{flex:0 0 auto;display:grid;gap:4px;justify-items:center;min-width:78px}
 .combination-group-label{font-size:.66rem;font-weight:1000;color:#d23a42;white-space:nowrap}
 .combination-vowel-forms{display:flex;align-items:center;gap:3px}
-.combination-vowel,.combination-consonant{border:0;cursor:pointer;font-family:"Tahriri",serif}
+.combination-vowel,.combination-consonant{border:0;cursor:pointer;font-family:var(--lesson-font),serif}
 .combination-vowel{min-width:42px;min-height:46px;padding:2px 6px;border-radius:14px;background:#FFF0F0;color:#d32839;font-size:2rem;line-height:1;box-shadow:0 4px 0 #f2b8bd}
 .combination-vowel.selected{background:#e8414d;color:#fff;transform:translateY(2px);box-shadow:0 2px 0 #b92735}
 .combination-board-body{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:stretch;direction:rtl}

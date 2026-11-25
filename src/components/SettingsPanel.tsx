@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { sound, type AudioSettings, DEFAULT_MUSIC } from '../utils/audio';
+import { LESSON_FONTS, setEducationalFont, useEducationalFont, type EducationalFont } from '../utils/fontSettings';
 
 const UI = '/assets/ui/settings';
 
@@ -48,6 +49,8 @@ export const SettingsPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
   const [s, setS] = useState<AudioSettings>(() => sound.getSettings());
   const initial = useRef<AudioSettings>(sound.getSettings());
   const lastOn = useRef({ sfx: s.sfx || 0.8, music: s.music || DEFAULT_MUSIC });
+  const lessonFont = useEducationalFont();
+  const initialFont = useRef<EducationalFont>(lessonFont);
 
   useEffect(() => sound.subscribe(setS), []);
   useEffect(() => { if (s.sfx > 0) lastOn.current.sfx = s.sfx; if (s.music > 0) lastOn.current.music = s.music; }, [s]);
@@ -58,10 +61,13 @@ export const SettingsPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
   };
   const toggleMusic = () => { sound.playPop(); sound.setMusicVolume(s.music > 0 ? 0 : lastOn.current.music); };
 
+  const pickFont = (f: EducationalFont) => { if (f !== lessonFont) { setEducationalFont(f); sound.playPop(); } };
+
   /** ضربدر: برگشت به تنظیمات قبلی و بستن */
   const cancel = () => {
     sound.setSfxVolume(initial.current.sfx);
     sound.setMusicVolume(initial.current.music);
+    setEducationalFont(initialFont.current);
     sound.playPop();
     onClose();
   };
@@ -93,6 +99,23 @@ export const SettingsPanel: React.FC<{ onClose: () => void }> = ({ onClose }) =>
           <img src={`${UI}/icon-music.svg`} alt="" draggable={false} />
         </button>
         <VolumeSlider label="بلندی موسیقی" value={s.music} onChange={v => sound.setMusicVolume(v)} />
+      </div>
+
+      {/* فونت حروف و کلمه‌های تمرین‌ها؛ فونت خود برنامه (عنوان‌ها و تنظیمات) ثابت می‌ماند */}
+      <div className="font-row" dir="rtl" role="radiogroup" aria-label="فونت حروف و کلمه‌های تمرین‌ها">
+        <span className="font-row-label">خط تمرین‌ها</span>
+        <div className="font-row-options">
+          {LESSON_FONTS.map(f => <button
+            key={f.id}
+            type="button"
+            role="radio"
+            aria-checked={lessonFont === f.id}
+            aria-label={`فونت ${f.label}`}
+            className={`font-opt ${lessonFont === f.id ? 'on' : ''}`}
+            style={{ fontFamily: f.family, '--s': f.previewScale } as React.CSSProperties}
+            onClick={() => pickFont(f.id)}
+          >{f.label}</button>)}
+        </div>
       </div>
 
       <button type="button" className="sound-btn sound-ok" onClick={save} aria-label="ذخیره و بستن">

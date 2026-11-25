@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Check, ChevronLeft, ChevronRight, Eraser, RefreshCw, Volume2 } from 'lucide-react';
 import { CURRICULUM, CurriculumLesson, LikeWord, kidDisplay } from '../data/curriculum';
+import { getEducationalFontFamily } from '../utils/fontSettings';
 import { boardLessonWords, WORD_BANK, hasRealEmoji } from '../data/wordBank';
 import { sound } from '../utils/audio';
 import { shuffle, toFa, useCurrentLesson } from '../utils/lessonState';
@@ -102,7 +103,8 @@ export function useAutoNext() {
    - ضربه زدن (تَپ) و خط‌های خیلی کوتاه پوشش حساب نمی‌شوند، مگر روی نقطه‌های حرف
    - فقط تکه‌هایی از خط کودک که روی نشانه‌اند پوشش می‌دهند؛ خطی که بیشترش بیرون است کلاً حساب نمی‌شود
    - هر تکهٔ جدای شکل (هر شکل حرف، بدنه، نقطه‌ها) باید جداگانه کشیده شود؛ با کشیدن فقط یک بخش قبول نمی‌شود */
-const TRACE_FONT = '"Tahriri"';
+/** فونت بوم تمرین نوشتن همان فونت آموزشیِ انتخاب‌شده در تنظیمات است */
+const traceFont = () => getEducationalFontFamily();
 const NEED_COVER = 0.75;     // حداقل پوشش کل خط‌چین
 const NEED_PART = 0.6;       // حداقل پوشش هر تکهٔ بزرگ (بدنهٔ هر شکل)
 const NEED_DOT = 0.3;        // نقطه‌ها/تکه‌های کوچک باید دست‌کم لمس شوند
@@ -158,7 +160,7 @@ function fitText(text: string, w: number, h: number) {
   const cw = Math.ceil(probe * (text.length + 2) * 1.2) + 200, ch = probe * 3;
   c.width = cw; c.height = ch;
   const g = c.getContext('2d', { willReadFrequently: true })!;
-  g.direction = 'rtl'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `${probe}px ${TRACE_FONT}`; g.fillStyle = '#000';
+  g.direction = 'rtl'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.font = `${probe}px ${traceFont()}`; g.fillStyle = '#000';
   const ox = cw / 2, oy = ch / 2;
   g.fillText(text, ox, oy);
   g.lineWidth = probe * 0.02; g.strokeText(text, ox, oy);
@@ -174,7 +176,7 @@ function fitText(text: string, w: number, h: number) {
 function textMask(text: string, L: TraceLayout, grow: number) {
   const c = document.createElement('canvas'); c.width = L.w; c.height = L.h;
   const m = c.getContext('2d', { willReadFrequently: true })!;
-  m.direction = 'rtl'; m.textAlign = 'center'; m.textBaseline = 'middle'; m.font = `${L.size}px ${TRACE_FONT}`;
+  m.direction = 'rtl'; m.textAlign = 'center'; m.textBaseline = 'middle'; m.font = `${L.size}px ${traceFont()}`;
   m.fillStyle = '#000'; m.strokeStyle = '#000'; m.lineJoin = 'round'; m.lineCap = 'round';
   m.fillText(text, L.x, L.y);
   if (grow > 0) { m.lineWidth = grow * 2; m.strokeText(text, L.x, L.y); }
@@ -221,7 +223,7 @@ const LetterTrace: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = 
   const drawGuide = useCallback(async () => {
     const wrap = wrapRef.current, guide = guideRef.current, ink = inkRef.current;
     if (!wrap || !guide || !ink) return;
-    try { await document.fonts.load(`100px ${TRACE_FONT}`); } catch { /* ignore */ }
+    try { await document.fonts.load(`100px ${traceFont()}`); } catch { /* ignore */ }
     const w = wrap.clientWidth;
     const h = Math.round(Math.max(280, Math.min(520, w * 0.8, window.innerHeight * 0.56)));
     const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
@@ -230,7 +232,7 @@ const LetterTrace: React.FC<{ lesson: CurriculumLesson; onDone: () => void }> = 
     const L: TraceLayout = { w, h, size: fit.size, x: fit.x, y: fit.y, glyph: null, near: null, strokes: [], comp: null, parts: [] };
     const ctx = guide.getContext('2d')!;
     ctx.clearRect(0, 0, w, h);
-    ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `${L.size}px ${TRACE_FONT}`;
+    ctx.direction = 'rtl'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = `${L.size}px ${traceFont()}`;
     // شکل توخالی: درون کم‌رنگ، دور خط‌چین
     ctx.fillStyle = 'rgba(206,218,236,.6)';
     ctx.fillText(displayText, L.x, L.y);

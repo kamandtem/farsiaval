@@ -19,6 +19,7 @@ import { initBilling } from './utils/billing';
 import { ActiveScreen, UserProgress } from './types';
 import { loadProgress, recordActivityCompleted } from './utils/progressStorage';
 import { sound } from './utils/audio';
+import { useEducationalFont } from './utils/fontSettings';
 import { initBackNavigation, useBackHandler } from './utils/backNav';
 import { initNativeChrome, setStatusBarColor } from './utils/native';
 
@@ -30,6 +31,8 @@ const RESUMABLE: Partial<Record<ActiveScreen, string>> = { recognition_village: 
 const readResume = (): ActiveScreen | null => { try { const v = localStorage.getItem(RESUME_KEY) as ActiveScreen | null; return v && RESUMABLE[v] ? v : null; } catch { return null; } };
 
 export default function App() {
+  // با تغییر فونت آموزشی، برنامه دوباره رسم می‌شود (بدون ریست شدن صفحه) تا شکل حرف‌ها (kidGlyph) با فونت تازه بخواند
+  useEducationalFont();
   return <><AppScreens /><PaywallDialog /><ExitDialog /></>;
 }
 

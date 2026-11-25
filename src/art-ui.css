@@ -467,3 +467,17 @@
 
 /* دکمهٔ شنیدن کلمه در بازی پنجم (بخش‌بخش کردن) */
 .syl-row1-speaker{position:absolute;top:6px;left:6px;z-index:3;min-width:40px;min-height:40px}
+
+/* ---------- انتخاب فونت تمرین‌ها در تنظیمات ----------
+   فقط حروف و کلمه‌های آموزشی عوض می‌شوند؛ نوشته‌های خود پنل با فونت برنامه می‌مانند */
+.sound-panel{container-type:inline-size}
+.sound-row-sfx{top:24.2%}
+.sound-row-music{top:32.6%}
+.font-row{position:absolute;left:15%;width:71%;top:43.6%;display:grid;gap:1.4%;justify-items:center}
+.font-row-label{font-family:var(--ui-font);font-weight:800;font-size:clamp(.6rem,3cqw,.9rem);line-height:1.2;color:oklch(40% .08 40);white-space:nowrap}
+.font-row-options{display:flex;gap:2.5%;width:100%}
+.font-opt{flex:1 1 0;min-width:0;height:clamp(36px,11.6cqw,54px);padding:0 3px;display:grid;place-items:center;text-align:center;border:3px solid oklch(98% .02 85);border-radius:18px;background:oklch(96% .04 85);color:oklch(32% .06 45);font-size:calc(clamp(.72rem,3.6cqw,1.05rem) * var(--s,1));line-height:1.35;cursor:pointer;box-shadow:0 3px 0 oklch(72% .09 60/.6);transition:transform 140ms var(--ease-out),background 140ms,box-shadow 140ms;-webkit-tap-highlight-color:transparent}
+.font-opt:active{transform:translateY(2px) scale(.96)}
+.font-opt.on{background:linear-gradient(180deg,oklch(82% .17 145),oklch(70% .17 150));border-color:#fff;color:#fff;box-shadow:0 3px 0 oklch(50% .14 150)}
+.font-opt:focus-visible{outline:3px solid oklch(68% .17 230);outline-offset:2px}
+.sound-ok{top:58.6%;left:43%;width:14%}

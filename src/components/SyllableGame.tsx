@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ChevronLeft, RotateCcw, Volume2 } from 'lucide-react';
 import { CURRICULUM, CurriculumLesson, bookLessonOf, kidDisplay } from '../data/curriculum';
+import { getEducationalFontFamily } from '../utils/fontSettings';
 import { boardLessonWords, WORD_BANK, emojiText, hasRealEmoji } from '../data/wordBank';
 import { WordPic } from './shared/WordPic';
 import { lessonOfWord, plainWord } from '../utils/pieces';
@@ -176,7 +177,7 @@ const SelectableWord: React.FC<{
       setFontPx(old => (old === px ? old : px));
     };
     fit();
-    try { document.fonts.load('100px "Tahriri"', parsed.word).then(fit).catch(() => undefined); } catch { /* ignore */ }
+    try { document.fonts.load(`100px ${getEducationalFontFamily()}`, parsed.word).then(fit).catch(() => undefined); } catch { /* ignore */ }
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(fit) : null;
     ro?.observe(row);
     return () => { alive = false; ro?.disconnect(); };
@@ -237,7 +238,7 @@ const SelectableWord: React.FC<{
       } else setBoxes(next);
     };
     measure();
-    try { document.fonts.load('80px "Tahriri"', parsed.word).then(measure).catch(() => undefined); } catch { /* ignore */ }
+    try { document.fonts.load(`80px ${getEducationalFontFamily()}`, parsed.word).then(measure).catch(() => undefined); } catch { /* ignore */ }
     const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
     if (observer) observer.observe(wrap);
     window.addEventListener('resize', measure);

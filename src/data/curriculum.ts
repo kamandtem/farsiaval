@@ -5,6 +5,8 @@
  * بخش ۱: «آموزش نشانه‌ها ۱» (۳۱ درس) — بخش ۲: «آموزش نشانه‌ها ۲» (۹ درس).
  * همه تمرین‌های برنامه فقط از واژه‌هایی استفاده می‌کنند که همه نشانه‌هایشان تا درسِ انتخاب‌شده آموزش داده شده باشد.
  */
+import { educationalFontHasKidForms } from '../utils/fontSettings';
+
 
 const ZWJ = '\u200D';
 /** شکل‌های نمایشی بدون کشیده؛ با ZWJ تا خود glyph فونت تحریری نمایش داده شود */
@@ -31,6 +33,14 @@ export const KID_FORMS: Record<string, string> = { [ZWJ + 'ه' + ZWJ]: '\uE106',
 /** نمایش یک قطعهٔ آموزشی با glyph خود فونت، حتی وقتی کشیده به صورت ZWJ ذخیره شده باشد. */
 export const kidGlyph = (g: string) => {
   const normalized = g.replace(/\u0640/g, ZWJ);
+  // فونت‌هایی غیر از تحریری نویسه‌های کودکانهٔ کتاب (U+E103..) را ندارند و مربع خالی نشان می‌دهند؛
+  // برای آن‌ها همان شکل معمولیِ حرف (با ZWJ) می‌ماند و اعراب روی خود حرف می‌نشیند
+  if (!educationalFontHasKidForms()) {
+    if (KID_FORMS[normalized]) return normalized;
+    const plain = normalized.match(/^([بنمهت])\u200D([\u064B-\u0652\u0670اوی]*)$/);
+    if (plain) return plain[2] ? plain[1] + plain[2] + ZWJ : normalized;
+    return g;
+  }
   if (KID_FORMS[normalized]) return KID_FORMS[normalized];
   const init = normalized.match(/^([بنمهت])\u200D([\u064B-\u0652\u0670اوی]*)$/);
   if (init && KID_INIT[init[1]]) return KID_INIT[init[1]] + init[2];
