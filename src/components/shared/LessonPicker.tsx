@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import { CURRICULUM, kidDisplay, lessonForToday, weekLabel } from '../../data/curriculum';
+import { CURRICULUM, lessonForToday, weekLabel } from '../../data/curriculum';
 import { toFa, useCurrentLesson } from '../../utils/lessonState';
 import { sound } from '../../utils/audio';
 import { useBackHandler } from '../../utils/backNav';
@@ -29,11 +29,7 @@ export const LessonSheet: React.FC<{ open: boolean; onClose: () => void }> = ({ 
           onClick={() => { sound.playPop(); if (setLesson(l.order)) { sound.playLetter(l.order); window.setTimeout(onClose, 180); } }}>
           {locked && <span className="lesson-tile-lock" aria-hidden="true">🔒</span>}
           <span className="lesson-tile-num">{toFa(l.order)}</span>
-          {l.order === 27
-            ? <b className="tahriri lesson-tile-forms" aria-label="شکل‌های حرف ه">
-                {['ه', 'ـه', 'ـهـ', 'هـ'].map(form => <span key={form}>{kidDisplay(form)}</span>)}
-              </b>
-            : <b className="tahriri"><SignText text={l.sign} /></b>}
+          <b className="tahriri"><SignText text={l.sign} fit=".lesson-tile" /></b>
           <small>{weekLabel(l.week)}</small>
           {l.order === today && <em>امروز ⭐</em>}
         </button>; })}

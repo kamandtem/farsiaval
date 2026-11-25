@@ -3,6 +3,7 @@ import { sound } from '../utils/audio';
 import { useBackHandler } from '../utils/backNav';
 import { CloseArt } from './shared/ArtButtons';
 import { SettingsPanel } from './SettingsPanel';
+import { FontTip, fontTipSeen } from './FontTip';
 
 interface SplashProps {
   /** دکمهٔ سبز بزرگ: رفتن به نقشهٔ دهکده‌ها برای انتخاب نوع بازی */
@@ -20,6 +21,7 @@ export const SplashScreen: React.FC<SplashProps> = ({ onStart, onContinue, onPro
   const [showStart, setShowStart] = useState(skipNativeSplash);
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [fontTipOpen, setFontTipOpen] = useState(false);
   useBackHandler(() => { setSettingsOpen(false); }, settingsOpen);
   useBackHandler(() => { setMenuOpen(false); }, menuOpen && !settingsOpen);
 
@@ -29,6 +31,13 @@ export const SplashScreen: React.FC<SplashProps> = ({ onStart, onContinue, onPro
     const timer = window.setTimeout(() => setShowStart(true), 1800);
     return () => window.clearTimeout(timer);
   }, [skipNativeSplash]);
+
+  // بار اولِ باز شدن برنامه: راهنمای تغییر فونت (بعد از چند لحظه، وقتی صفحهٔ شروع دیده شد)
+  useEffect(() => {
+    if (!showStart || fontTipSeen()) return;
+    const timer = window.setTimeout(() => { if (!fontTipSeen()) { setFontTipOpen(true); sound.playGentleHint(); } }, 700);
+    return () => window.clearTimeout(timer);
+  }, [showStart]);
 
   if (!showStart) {
     return <main className="native-splash" dir="rtl" onClick={() => setShowStart(true)}>
@@ -84,6 +93,8 @@ export const SplashScreen: React.FC<SplashProps> = ({ onStart, onContinue, onPro
         </button>
       </div>
     </div>}
+
+    {fontTipOpen && <FontTip onClose={() => setFontTipOpen(false)} onOpenSettings={() => { setFontTipOpen(false); setSettingsOpen(true); }} />}
 
     {settingsOpen && <SettingsPanel onClose={() => setSettingsOpen(false)} />}
   </main>;

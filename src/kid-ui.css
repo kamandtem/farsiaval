@@ -110,15 +110,15 @@ img{-webkit-user-drag:none}
 .letters-help-lesson{display:flex;justify-content:center;margin:0 0 12px}
 
 .kid-sheet-backdrop{position:fixed;inset:0;z-index:80;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,45,80,.45);animation:fadeIn .18s ease-out}
-.kid-sheet{position:relative;width:100%;max-width:680px;max-height:84dvh;overflow-y:auto;overscroll-behavior:contain;padding:8px 14px calc(18px + var(--sab));border-radius:30px 30px 0 0;background:linear-gradient(180deg,#FFF8E4,#FFFDF7 30%);box-shadow:0 -12px 30px rgba(0,0,0,.2);font-family:var(--ui-font);color:var(--brown);animation:sheetUp .3s cubic-bezier(.22,1,.36,1)}
+.kid-sheet{overflow-x:hidden;position:relative;width:100%;max-width:680px;max-height:84dvh;overflow-y:auto;overscroll-behavior:contain;padding:8px 14px calc(18px + var(--sab));border-radius:30px 30px 0 0;background:linear-gradient(180deg,#FFF8E4,#FFFDF7 30%);box-shadow:0 -12px 30px rgba(0,0,0,.2);font-family:var(--ui-font);color:var(--brown);animation:sheetUp .3s cubic-bezier(.22,1,.36,1)}
 .kid-sheet-grip{display:block;width:54px;height:6px;margin:2px auto 10px;border-radius:9px;background:#EACB86}
 .kid-sheet header{position:sticky;top:-8px;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 -14px 10px;padding:6px 16px 10px;background:#FFF8E4}
 .kid-sheet header b{display:block;font-size:1.25rem;font-weight:900}
 .kid-sheet header small{font-size:.78rem;font-weight:700;color:#8a5a20}
 .lesson-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:10px}
-.lesson-tile{position:relative;display:grid;justify-items:center;align-content:center;gap:0;min-height:98px;padding:14px 4px 6px;border:3px solid #FFE3A3;border-radius:22px;background:#fff;color:var(--brown);box-shadow:0 4px 0 #F0CC7A;cursor:pointer;transition:transform .12s}
+.lesson-tile{min-width:0;position:relative;display:grid;justify-items:center;align-content:center;gap:0;min-height:98px;padding:14px 4px 6px;border:3px solid #FFE3A3;border-radius:22px;background:#fff;color:var(--brown);box-shadow:0 4px 0 #F0CC7A;cursor:pointer;transition:transform .12s}
 .lesson-tile:active{transform:translateY(3px);box-shadow:0 1px 0 #F0CC7A}
-.lesson-tile b{font-size:2.3rem;line-height:1.25;color:#E4572E}
+.lesson-tile b{max-width:100%;min-width:0;font-size:2.3rem;line-height:1.25;color:#E4572E}
 .lesson-tile small{font-size:.6rem;font-weight:700;color:#9a7440;line-height:1.3}
 .lesson-tile-num{position:absolute;top:5px;right:8px;font-size:.72rem;font-weight:900;color:#C9A15A}
 .lesson-tile em{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:1px 8px;border-radius:9px;background:#FFCC33;color:var(--brown);font-style:normal;font-size:.6rem;font-weight:900;white-space:nowrap;box-shadow:0 2px 0 #D9A200}
@@ -292,3 +292,12 @@ img{-webkit-user-drag:none}
 .paywall-actions{display:flex;gap:10px;margin-top:12px}
 .paywall-actions button{flex:1;padding:9px 6px;border:3px solid #FFE3A3;border-radius:16px;background:#fff;color:var(--brown);font:inherit;font-size:.9rem;font-weight:800;box-shadow:0 3px 0 #F0CC7A;cursor:pointer}
 .paywall-actions button:disabled{opacity:.5}
+
+/* راهنمای تغییر فونت (بار اول) */
+.fonttip-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:4px 0 14px}
+.fonttip-opt{display:grid;justify-items:center;gap:2px;min-width:0;padding:8px 2px 6px;border:3px solid #FFE3A3;border-radius:18px;background:#fff;color:var(--brown);box-shadow:0 3px 0 #F0CC7A;cursor:pointer;transition:transform .12s}
+.fonttip-opt:active{transform:translateY(2px)}
+.fonttip-opt b{font-size:1.7rem;line-height:1.3;font-weight:400;color:#E4572E;white-space:nowrap}
+.fonttip-opt small{font-family:var(--ui-font);font-size:.62rem;font-weight:800;line-height:1.3;color:#9a7440}
+.fonttip-opt.on{background:linear-gradient(180deg,#7BE495,#34BD63);border-color:#fff;box-shadow:0 3px 0 #23853F}
+.fonttip-opt.on b,.fonttip-opt.on small{color:#fff}

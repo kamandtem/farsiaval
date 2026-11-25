@@ -230,6 +230,7 @@
 .like-prompt b{font-size:2.6em;color:oklch(55% .2 25);vertical-align:middle;padding-left:10px}
 .lesson-form-run{display:inline-flex;direction:rtl;align-items:baseline;gap:.28em;white-space:nowrap}
 .lesson-form-run>span{display:inline-block;unicode-bidi:isolate;white-space:nowrap}
+.lesson-form-run.grid2{display:inline-grid;grid-template-columns:repeat(2,auto);justify-items:center;align-items:baseline;column-gap:.28em;row-gap:.04em;line-height:1.1;max-width:100%}
 .lesson-tile-forms{display:flex!important;direction:ltr;align-items:baseline;justify-content:center;gap:.18em;white-space:nowrap}
 .lesson-tile-forms>span{display:inline-block;unicode-bidi:isolate;white-space:nowrap}
 .like-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
